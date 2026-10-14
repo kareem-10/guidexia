@@ -30,8 +30,8 @@ class ShimmerPlaceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-      baseColor: const Color(0xff242727),
-      highlightColor: const Color(0xff363939),
+      baseColor: const Color(0xFFE7EAEC),
+      highlightColor: const Color(0xFFF7F8F9),
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,

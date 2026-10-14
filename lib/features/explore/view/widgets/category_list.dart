@@ -47,7 +47,7 @@ class CategoryList extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: selected
                         ? AppColors.primaryColor
-                        : const Color(0xff1A1C1C),
+                        : AppColors.primaryColor.withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(20.r),
                     border: Border.all(
                       color: selected ? Colors.white54 : Colors.transparent,
@@ -55,7 +55,10 @@ class CategoryList extends StatelessWidget {
                   ),
                   child: Text(
                     category['name']!,
-                    style: TextStyle(color: Colors.white, fontSize: 11.sp),
+                    style: TextStyle(
+                      color: selected ? Colors.white : Colors.black,
+                      fontSize: 11.sp,
+                    ),
                   ),
                 ),
               );

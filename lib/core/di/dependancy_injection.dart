@@ -5,6 +5,8 @@ import 'package:tourist_app/core/api/dio_consumer.dart';
 import 'package:tourist_app/core/helpers/cache_helper.dart';
 import 'package:tourist_app/features/explore/data/repos/explore_repo.dart';
 import 'package:tourist_app/features/explore/view_model/cubit/explore_cubit.dart';
+import 'package:tourist_app/features/guides/data/repos/guides_repo.dart';
+import 'package:tourist_app/features/guides/view_model/cubit/guides_cubit.dart';
 import 'package:tourist_app/features/login/data/repos/login_repo.dart';
 import 'package:tourist_app/features/login/view_model/cubit/login_cubit.dart';
 import 'package:tourist_app/features/profile/data/repos/profile_repo.dart';
@@ -44,4 +46,8 @@ Future<void> setupGetIt() async {
   getIt.registerLazySingleton<ExploreRepo>(() => ExploreRepo());
 
   getIt.registerFactory<ExploreCubit>(() => ExploreCubit(getIt()));
+
+  // Guides
+  getIt.registerLazySingleton<GuidesRepo>(() => GuidesRepo());
+  getIt.registerFactory<GuidesCubit>(() => GuidesCubit(getIt<GuidesRepo>()));
 }

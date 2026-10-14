@@ -5,7 +5,8 @@ import 'package:tourist_app/core/di/dependancy_injection.dart';
 import 'package:tourist_app/core/utils/app_colors.dart';
 import 'package:tourist_app/features/explore/view/explore_screen.dart';
 import 'package:tourist_app/features/explore/view_model/cubit/explore_cubit.dart';
-import 'package:tourist_app/features/guides/view/guides_screen.dart';
+import 'package:tourist_app/features/guides/view/screens/guides_screen.dart';
+import 'package:tourist_app/features/guides/view_model/cubit/guides_cubit.dart';
 import 'package:tourist_app/features/profile/view/profile_screen.dart';
 import 'package:tourist_app/features/profile/view_model/cubit/profile_cubit.dart';
 import 'package:tourist_app/features/saved/view/saved_screen.dart';
@@ -31,7 +32,10 @@ class NavBarWidget extends StatelessWidget {
           ),
         ),
         PersistentTabConfig(
-          screen: GuidesScreen(),
+          screen: BlocProvider(
+            create: (context) => getIt<GuidesCubit>(),
+            child: GuidesScreen(),
+          ),
           item: ItemConfig(
             icon: Icon(Icons.group_outlined),
             activeForegroundColor: AppColors.primaryColor,

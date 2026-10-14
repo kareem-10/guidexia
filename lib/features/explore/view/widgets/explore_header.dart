@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tourist_app/core/helpers/spacing.dart';
+import 'package:tourist_app/core/widgets/app_bar_text.dart';
 
 class ExploreHeader extends StatelessWidget {
   const ExploreHeader({super.key});
@@ -10,14 +11,7 @@ class ExploreHeader extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Explore places',
-          style: TextStyle(
-            fontSize: 27.sp,
-            fontWeight: FontWeight.w500,
-            color: Colors.black,
-          ),
-        ),
+        AppBarTitle(text: 'Explore places'),
         verticalSpace(5),
         Text(
           'Find the places you’ll never forget.',
