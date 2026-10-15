@@ -11,6 +11,7 @@ import 'package:tourist_app/features/profile/view/profile_screen.dart';
 import 'package:tourist_app/features/profile/view_model/cubit/profile_cubit.dart';
 import 'package:tourist_app/features/saved/view/saved_screen.dart';
 import 'package:tourist_app/features/stays/view/stays_screen.dart';
+import 'package:tourist_app/features/stays/view_model/cubit/stay_cubit.dart';
 
 class NavBarWidget extends StatelessWidget {
   const NavBarWidget({super.key});
@@ -44,7 +45,10 @@ class NavBarWidget extends StatelessWidget {
           ),
         ),
         PersistentTabConfig(
-          screen: StaysScreen(),
+          screen: BlocProvider(
+            create: (context) => getIt<StayCubit>()..getStays(),
+            child: StaysScreen(),
+          ),
           item: ItemConfig(
             icon: Icon(Icons.hotel_outlined),
             activeForegroundColor: AppColors.primaryColor,

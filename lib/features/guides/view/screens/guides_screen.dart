@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:tourist_app/core/helpers/spacing.dart';
-import 'package:tourist_app/core/widgets/app_bar_text.dart';
+import 'package:tourist_app/core/widgets/app_bar_title.dart';
 import 'package:tourist_app/core/widgets/search_bar_widget.dart';
 import 'package:tourist_app/features/guides/view/screens/guide_details_screen.dart';
 import '../../data/models/guide_model.dart';

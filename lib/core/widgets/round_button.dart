@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:tourist_app/core/utils/app_colors.dart';
 
 class RoundButton extends StatelessWidget {
   const RoundButton({super.key, required this.icon, required this.onTap});
@@ -10,7 +11,7 @@ class RoundButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.black.withValues(alpha: 0.28),
+      color: AppColors.primaryColor.withValues(alpha: 0.4),
       shape: const CircleBorder(),
       child: IconButton(
         onPressed: onTap,

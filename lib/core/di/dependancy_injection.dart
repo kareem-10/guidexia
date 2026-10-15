@@ -13,6 +13,8 @@ import 'package:tourist_app/features/profile/data/repos/profile_repo.dart';
 import 'package:tourist_app/features/profile/view_model/cubit/profile_cubit.dart';
 import 'package:tourist_app/features/signup/data/repos/signup_repo.dart';
 import 'package:tourist_app/features/signup/view_model/cubit/signup_cubit.dart';
+import 'package:tourist_app/features/stays/data/repos/stay_repository.dart';
+import 'package:tourist_app/features/stays/view_model/cubit/stay_cubit.dart';
 
 final getIt = GetIt.instance;
 Future<void> setupGetIt() async {
@@ -50,4 +52,8 @@ Future<void> setupGetIt() async {
   // Guides
   getIt.registerLazySingleton<GuidesRepo>(() => GuidesRepo());
   getIt.registerFactory<GuidesCubit>(() => GuidesCubit(getIt<GuidesRepo>()));
+
+  // Stays
+  getIt.registerLazySingleton<StayRepository>(() => StayRepository());
+  getIt.registerFactory<StayCubit>(() => StayCubit(getIt()));
 }
