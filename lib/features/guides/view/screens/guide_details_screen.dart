@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tourist_app/core/utils/app_colors.dart';
+import 'package:tourist_app/core/widgets/favorite_icon_button.dart';
 import 'package:tourist_app/core/widgets/round_button.dart';
 import 'package:tourist_app/features/guides/view/widgets/state_widget.dart';
+import 'package:tourist_app/features/saved/view_model/cubit/saved_cubit.dart';
 import '../../data/models/guide_model.dart';
-import '../../view_model/cubit/guides_cubit.dart';
-import '../../view_model/cubit/guides_state.dart';
 
 class GuideDetailsScreen extends StatelessWidget {
   final GuideModel guide;
@@ -21,7 +21,6 @@ class GuideDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<GuidesCubit>();
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -40,26 +39,9 @@ class GuideDetailsScreen extends StatelessWidget {
             actions: [
               Padding(
                 padding: EdgeInsets.all(10.w),
-                child: BlocBuilder<GuidesCubit, GuidesState>(
-                  builder: (context, state) => RoundButton(
-                    icon: cubit.isFavorite(guide.id)
-                        ? Icons.favorite
-                        : Icons.favorite_border,
-                    onTap: () {
-                      final wasFavorite = cubit.isFavorite(guide.id);
-                      cubit.toggleFavorite(guide.id);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            wasFavorite
-                                ? 'Removed from favorites'
-                                : 'Added to favorites',
-                          ),
-                          duration: const Duration(seconds: 1),
-                        ),
-                      );
-                    },
-                  ),
+                child: FavoriteIconButton(
+                  entityId: guide.id,
+                  entityType: 'Guide',
                 ),
               ),
             ],
@@ -251,58 +233,17 @@ class GuideDetailsScreen extends StatelessWidget {
             color: Colors.white,
             border: Border(top: BorderSide(color: Color(0xFFE5E9EC))),
           ),
-          child: Row(
-            children: [
-              Expanded(
-                child: BlocBuilder<GuidesCubit, GuidesState>(
-                  builder: (context, state) => OutlinedButton.icon(
-                    onPressed: () {
-                      final wasFavorite = cubit.isFavorite(guide.id);
-                      cubit.toggleFavorite(guide.id);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            wasFavorite
-                                ? 'Removed from favorites'
-                                : 'Added to favorites',
-                          ),
-                          duration: const Duration(seconds: 1),
-                        ),
-                      );
-                    },
-                    icon: Icon(
-                      cubit.isFavorite(guide.id)
-                          ? Icons.favorite
-                          : Icons.favorite_border,
-                    ),
-                    label: const Text('Save Guide'),
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: AppColors.primaryColor,
-                      side: BorderSide(color: AppColors.primaryColor),
-                      padding: EdgeInsets.symmetric(vertical: 15.h),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(13.r),
-                      ),
-                    ),
-                  ),
-                ),
+          child: FilledButton(
+            onPressed: null,
+            style: FilledButton.styleFrom(
+              backgroundColor: AppColors.primaryColor,
+              disabledBackgroundColor: const Color(0xFFB8CBCD),
+              padding: EdgeInsets.symmetric(vertical: 15.h),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(13.r),
               ),
-              SizedBox(width: 10.w),
-              Expanded(
-                child: FilledButton(
-                  onPressed: null,
-                  style: FilledButton.styleFrom(
-                    backgroundColor: AppColors.primaryColor,
-                    disabledBackgroundColor: const Color(0xFFB8CBCD),
-                    padding: EdgeInsets.symmetric(vertical: 15.h),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(13.r),
-                    ),
-                  ),
-                  child: const Text('Booking unavailable'),
-                ),
-              ),
-            ],
+            ),
+            child: const Text('Booking unavailable'),
           ),
         ),
       ),

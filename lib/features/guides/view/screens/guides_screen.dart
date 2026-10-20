@@ -5,7 +5,6 @@ import 'package:get_it/get_it.dart';
 import 'package:tourist_app/core/helpers/spacing.dart';
 import 'package:tourist_app/core/widgets/app_bar_title.dart';
 import 'package:tourist_app/core/widgets/search_bar_widget.dart';
-import 'package:tourist_app/features/guides/view/screens/guide_details_screen.dart';
 import '../../data/models/guide_model.dart';
 import '../../view_model/cubit/guides_cubit.dart';
 import '../../view_model/cubit/guides_state.dart';
@@ -112,19 +111,8 @@ class _GuidesViewState extends State<_GuidesView> {
                             padding: const EdgeInsets.fromLTRB(18, 0, 18, 20),
                             itemCount: guides.length,
                             separatorBuilder: (_, _) => verticalSpace(12),
-                            itemBuilder: (context, index) => GuideCard(
-                              guide: guides[index],
-                              onTap: () => Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (_) => BlocProvider.value(
-                                    value: context.read<GuidesCubit>(),
-                                    child: GuideDetailsScreen(
-                                      guide: guides[index],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
+                            itemBuilder: (context, index) =>
+                                GuideCard(guide: guides[index]),
                           ),
                         ),
                       ],

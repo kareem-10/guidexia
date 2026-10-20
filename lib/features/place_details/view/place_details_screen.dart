@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tourist_app/core/utils/app_colors.dart';
+import 'package:tourist_app/core/widgets/favorite_icon_button.dart';
 import 'package:tourist_app/core/widgets/round_button.dart';
 import 'package:tourist_app/features/explore/data/models/place_model.dart';
 import 'package:tourist_app/features/place_details/view/widgets/about_section.dart';
@@ -36,11 +37,9 @@ class PlaceDetailsScreen extends StatelessWidget {
             actions: [
               Padding(
                 padding: EdgeInsets.all(10.w),
-                child: RoundButton(
-                  icon: Icons.favorite_border,
-                  onTap: () {
-                    // Favorites will be connected here later.
-                  },
+                child: FavoriteIconButton(
+                  entityId: place.id,
+                  entityType: 'Place',
                 ),
               ),
             ],

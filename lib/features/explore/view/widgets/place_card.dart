@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tourist_app/core/utils/app_colors.dart';
+import 'package:tourist_app/core/widgets/favorite_icon_button.dart';
 import 'package:tourist_app/features/explore/data/models/place_model.dart';
 import 'package:tourist_app/features/place_details/view/place_details_screen.dart';
 
@@ -109,18 +110,9 @@ class PlaceCard extends StatelessWidget {
                     Positioned(
                       top: 8.h,
                       right: 8.w,
-                      child: Container(
-                        width: 30.w,
-                        height: 30.w,
-                        decoration: BoxDecoration(
-                          color: AppColors.primaryColor.withValues(alpha: 0.8),
-                          shape: BoxShape.circle,
-                        ),
-                        child: const Icon(
-                          Icons.favorite_border,
-                          color: Colors.white,
-                          size: 17,
-                        ),
+                      child: FavoriteIconButton(
+                        entityId: place.id,
+                        entityType: 'Place',
                       ),
                     ),
                   ],

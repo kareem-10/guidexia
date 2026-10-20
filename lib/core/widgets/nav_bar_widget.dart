@@ -10,6 +10,7 @@ import 'package:tourist_app/features/guides/view_model/cubit/guides_cubit.dart';
 import 'package:tourist_app/features/profile/view/profile_screen.dart';
 import 'package:tourist_app/features/profile/view_model/cubit/profile_cubit.dart';
 import 'package:tourist_app/features/saved/view/saved_screen.dart';
+import 'package:tourist_app/features/saved/view_model/cubit/saved_cubit.dart';
 import 'package:tourist_app/features/stays/view/stays_screen.dart';
 import 'package:tourist_app/features/stays/view_model/cubit/stay_cubit.dart';
 
@@ -18,68 +19,71 @@ class NavBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PersistentTabView(
-      tabs: [
-        PersistentTabConfig(
-          screen: BlocProvider(
-            create: (context) => getIt<ExploreCubit>(),
-            child: ExploreScreen(),
+    return BlocProvider(
+      create: (context) => getIt<SavedCubit>()..getSaves(),
+      child: PersistentTabView(
+        tabs: [
+          PersistentTabConfig(
+            screen: BlocProvider(
+              create: (context) => getIt<ExploreCubit>(),
+              child: ExploreScreen(),
+            ),
+            item: ItemConfig(
+              icon: Icon(Icons.explore_outlined),
+              activeForegroundColor: AppColors.primaryColor,
+              activeColorSecondary: AppColors.primaryColor,
+              title: "Explore",
+            ),
           ),
-          item: ItemConfig(
-            icon: Icon(Icons.explore_outlined),
-            activeForegroundColor: AppColors.primaryColor,
-            activeColorSecondary: AppColors.primaryColor,
-            title: "Explore",
+          PersistentTabConfig(
+            screen: BlocProvider(
+              create: (context) => getIt<GuidesCubit>()..loadGuides(),
+              child: GuidesScreen(),
+            ),
+            item: ItemConfig(
+              icon: Icon(Icons.group_outlined),
+              activeForegroundColor: AppColors.primaryColor,
+              activeColorSecondary: AppColors.primaryColor,
+              title: "Guides",
+            ),
           ),
-        ),
-        PersistentTabConfig(
-          screen: BlocProvider(
-            create: (context) => getIt<GuidesCubit>(),
-            child: GuidesScreen(),
+          PersistentTabConfig(
+            screen: BlocProvider(
+              create: (context) => getIt<StayCubit>()..getStays(),
+              child: StaysScreen(),
+            ),
+            item: ItemConfig(
+              icon: Icon(Icons.hotel_outlined),
+              activeForegroundColor: AppColors.primaryColor,
+              activeColorSecondary: AppColors.primaryColor,
+              title: "Stays",
+            ),
           ),
-          item: ItemConfig(
-            icon: Icon(Icons.group_outlined),
-            activeForegroundColor: AppColors.primaryColor,
-            activeColorSecondary: AppColors.primaryColor,
-            title: "Guides",
+          PersistentTabConfig(
+            screen: SavedScreen(),
+            item: ItemConfig(
+              icon: Icon(Icons.favorite_border_outlined),
+              activeForegroundColor: AppColors.primaryColor,
+              activeColorSecondary: AppColors.primaryColor,
+              title: "Saved",
+            ),
           ),
-        ),
-        PersistentTabConfig(
-          screen: BlocProvider(
-            create: (context) => getIt<StayCubit>()..getStays(),
-            child: StaysScreen(),
+          PersistentTabConfig(
+            screen: BlocProvider(
+              create: (context) => getIt<ProfileCubit>(),
+              child: ProfileScreen(),
+            ),
+            item: ItemConfig(
+              icon: Icon(Icons.person_outlined),
+              activeForegroundColor: AppColors.primaryColor,
+              activeColorSecondary: AppColors.primaryColor,
+              title: "Profile",
+            ),
           ),
-          item: ItemConfig(
-            icon: Icon(Icons.hotel_outlined),
-            activeForegroundColor: AppColors.primaryColor,
-            activeColorSecondary: AppColors.primaryColor,
-            title: "Stays",
-          ),
-        ),
-        PersistentTabConfig(
-          screen: SavedScreen(),
-          item: ItemConfig(
-            icon: Icon(Icons.favorite_border_outlined),
-            activeForegroundColor: AppColors.primaryColor,
-            activeColorSecondary: AppColors.primaryColor,
-            title: "Saved",
-          ),
-        ),
-        PersistentTabConfig(
-          screen: BlocProvider(
-            create: (context) => getIt<ProfileCubit>(),
-            child: ProfileScreen(),
-          ),
-          item: ItemConfig(
-            icon: Icon(Icons.person_outlined),
-            activeForegroundColor: AppColors.primaryColor,
-            activeColorSecondary: AppColors.primaryColor,
-            title: "Profile",
-          ),
-        ),
-      ],
-      navBarBuilder: (navBarConfig) =>
-          Style6BottomNavBar(navBarConfig: navBarConfig),
+        ],
+        navBarBuilder: (navBarConfig) =>
+            Style6BottomNavBar(navBarConfig: navBarConfig),
+      ),
     );
   }
 }

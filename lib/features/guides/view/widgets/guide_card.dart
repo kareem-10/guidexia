@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tourist_app/core/helpers/spacing.dart';
 import 'package:tourist_app/core/utils/app_colors.dart';
+import 'package:tourist_app/core/widgets/favorite_icon_button.dart';
+import 'package:tourist_app/features/guides/view/screens/guide_details_screen.dart';
 import '../../data/models/guide_model.dart';
-import '../../view_model/cubit/guides_cubit.dart';
 
 class GuideCard extends StatelessWidget {
   final GuideModel guide;
-  final VoidCallback onTap;
-  const GuideCard({super.key, required this.guide, required this.onTap});
+  const GuideCard({super.key, required this.guide});
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<GuidesCubit>();
     return Material(
       color: Colors.white,
       borderRadius: BorderRadius.circular(18),
       child: InkWell(
         borderRadius: BorderRadius.circular(18),
-        onTap: onTap,
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => GuideDetailsScreen(guide: guide)),
+        ),
         child: Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
@@ -168,21 +169,10 @@ class GuideCard extends StatelessWidget {
                   ],
                 ),
               ),
-              IconButton(
-                visualDensity: VisualDensity.compact,
-                tooltip: cubit.isFavorite(guide.id)
-                    ? 'Remove from favorites'
-                    : 'Add to favorites',
-                onPressed: () => cubit.toggleFavorite(guide.id),
-                icon: Icon(
-                  cubit.isFavorite(guide.id)
-                      ? Icons.favorite
-                      : Icons.favorite_border,
-                  color: cubit.isFavorite(guide.id)
-                      ? Colors.redAccent
-                      : Colors.blueGrey,
-                  size: 21.sp,
-                ),
+              FavoriteIconButton(
+                entityId: guide.id,
+                entityType: 'Guide',
+                overlay: true,
               ),
             ],
           ),

@@ -11,6 +11,8 @@ import 'package:tourist_app/features/login/data/repos/login_repo.dart';
 import 'package:tourist_app/features/login/view_model/cubit/login_cubit.dart';
 import 'package:tourist_app/features/profile/data/repos/profile_repo.dart';
 import 'package:tourist_app/features/profile/view_model/cubit/profile_cubit.dart';
+import 'package:tourist_app/features/saved/data/repos/saved_repo.dart';
+import 'package:tourist_app/features/saved/view_model/cubit/saved_cubit.dart';
 import 'package:tourist_app/features/signup/data/repos/signup_repo.dart';
 import 'package:tourist_app/features/signup/view_model/cubit/signup_cubit.dart';
 import 'package:tourist_app/features/stays/data/repos/stay_repository.dart';
@@ -56,4 +58,16 @@ Future<void> setupGetIt() async {
   // Stays
   getIt.registerLazySingleton<StayRepository>(() => StayRepository());
   getIt.registerFactory<StayCubit>(() => StayCubit(getIt()));
+
+  // Saved / Favorites
+  getIt.registerLazySingleton<SavedRepository>(() => SavedRepository());
+
+  getIt.registerFactory<SavedCubit>(
+    () => SavedCubit(
+      getIt<SavedRepository>(),
+      getIt<ExploreRepo>(),
+      getIt<GuidesRepo>(),
+      getIt<StayRepository>(),
+    ),
+  );
 }

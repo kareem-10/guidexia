@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tourist_app/core/utils/app_colors.dart';
-import 'package:tourist_app/core/widgets/round_button.dart';
+import 'package:tourist_app/core/widgets/favorite_icon_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../data/models/stay_model.dart';
@@ -61,8 +61,9 @@ class StayCard extends StatelessWidget {
                     ? stay.thumbnailUrl
                     : stay.imageUrl,
               ),
+              //margin
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10.w),
+                padding: EdgeInsets.all(10.w),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -84,13 +85,7 @@ class StayCard extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 5),
-                      child: RoundButton(
-                        icon: Icons.favorite_border_outlined,
-                        onTap: () {},
-                      ),
-                    ),
+                    FavoriteIconButton(entityId: stay.id, entityType: 'Stay'),
                   ],
                 ),
               ),
