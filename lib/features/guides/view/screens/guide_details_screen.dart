@@ -1,12 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tourist_app/core/utils/app_colors.dart';
 import 'package:tourist_app/core/widgets/favorite_icon_button.dart';
 import 'package:tourist_app/core/widgets/round_button.dart';
 import 'package:tourist_app/features/guides/view/widgets/state_widget.dart';
-import 'package:tourist_app/features/saved/view_model/cubit/saved_cubit.dart';
 import '../../data/models/guide_model.dart';
 
 class GuideDetailsScreen extends StatelessWidget {
