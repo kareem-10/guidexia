@@ -1,29 +1,51 @@
-part of 'profile_cubit.dart';
+import '../../data/models/profile_model.dart';
 
-sealed class ProfileState extends Equatable {
-  const ProfileState();
+enum ProfileStatus { initial, loading, success, failure }
 
-  @override
-  List<Object> get props => [];
+class ProfileState {
+  final ProfileStatus status;
+  final ProfileModel? profile;
+  final List<TripModel> trips;
+  final List<ReviewModel> reviews;
+  final bool tripNotifications;
+  final bool reviewNotifications;
+  final bool appNotifications;
+  final bool isDarkMode;
+  final String? errorMessage;
+
+  const ProfileState({
+    this.status = ProfileStatus.initial,
+    this.profile,
+    this.trips = const [],
+    this.reviews = const [],
+    this.tripNotifications = true,
+    this.reviewNotifications = true,
+    this.appNotifications = true,
+    this.isDarkMode = false,
+    this.errorMessage,
+  });
+
+  ProfileState copyWith({
+    ProfileStatus? status,
+    ProfileModel? profile,
+    List<TripModel>? trips,
+    List<ReviewModel>? reviews,
+    bool? tripNotifications,
+    bool? reviewNotifications,
+    bool? appNotifications,
+    bool? isDarkMode,
+    String? errorMessage,
+  }) {
+    return ProfileState(
+      status: status ?? this.status,
+      profile: profile ?? this.profile,
+      trips: trips ?? this.trips,
+      reviews: reviews ?? this.reviews,
+      tripNotifications: tripNotifications ?? this.tripNotifications,
+      reviewNotifications: reviewNotifications ?? this.reviewNotifications,
+      appNotifications: appNotifications ?? this.appNotifications,
+      isDarkMode: isDarkMode ?? this.isDarkMode,
+      errorMessage: errorMessage,
+    );
+  }
 }
-
-final class ProfileInitial extends ProfileState {}
-
-final class ProfileLoading extends ProfileState {}
-
-final class ProfileSuccess extends ProfileState {
-  final ProfileModel profileModel;
-
-  const ProfileSuccess({required this.profileModel});
-  @override
-  List<Object> get props => [profileModel];
-}
-
-final class ProfileError extends ProfileState {
-  final String message;
-  const ProfileError({required this.message});
-  @override
-  List<Object> get props => [message];
-}
-
-final class UploadProfilePic extends ProfileState {}

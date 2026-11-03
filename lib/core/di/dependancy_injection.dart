@@ -9,7 +9,7 @@ import 'package:tourist_app/features/guides/data/repos/guides_repo.dart';
 import 'package:tourist_app/features/guides/view_model/cubit/guides_cubit.dart';
 import 'package:tourist_app/features/login/data/repos/login_repo.dart';
 import 'package:tourist_app/features/login/view_model/cubit/login_cubit.dart';
-import 'package:tourist_app/features/profile/data/repos/profile_repo.dart';
+import 'package:tourist_app/features/profile/data/repos/profile_repository.dart';
 import 'package:tourist_app/features/profile/view_model/cubit/profile_cubit.dart';
 import 'package:tourist_app/features/saved/data/repos/saved_repo.dart';
 import 'package:tourist_app/features/saved/view_model/cubit/saved_cubit.dart';
@@ -43,7 +43,7 @@ Future<void> setupGetIt() async {
   getIt.registerFactory<SignupCubit>(() => SignupCubit(getIt()));
 
   // profile
-  getIt.registerLazySingleton<ProfileRepo>(() => ProfileRepo(getIt()));
+  getIt.registerLazySingleton<ProfileRepository>(() => ProfileRepository());
   getIt.registerFactory<ProfileCubit>(() => ProfileCubit(getIt()));
 
   // Explore
