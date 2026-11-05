@@ -18,8 +18,10 @@ import 'package:tourist_app/features/signup/view_model/cubit/signup_cubit.dart';
 import 'package:tourist_app/features/stays/data/repos/stay_repository.dart';
 import 'package:tourist_app/features/stays/view_model/cubit/stay_cubit.dart';
 
+import 'package:tourist_app/core/theming/theme_cubit/theme_cubit.dart';
+
 final getIt = GetIt.instance;
-Future<void> setupGetIt() async {
+Future<void> setupGetIt({CacheHelper? cacheHelper}) async {
   // Dio
   getIt.registerLazySingleton<Dio>(() => Dio());
 
@@ -27,7 +29,15 @@ Future<void> setupGetIt() async {
   getIt.registerLazySingleton<ApiConsumer>(() => DioConsumer(getIt()));
 
   // CacheHelper
-  getIt.registerLazySingleton<CacheHelper>(() => CacheHelper());
+  final cache = cacheHelper ?? CacheHelper();
+  getIt.registerLazySingleton<CacheHelper>(() => cache);
+
+  // Theming
+  getIt.registerLazySingleton<ThemeCubit>(() {
+    final cubit = ThemeCubit(getIt());
+    cubit.loadSavedTheme();
+    return cubit;
+  });
 
   // Dio & ApiService
   //Dio dio = DioFactory.getDio();

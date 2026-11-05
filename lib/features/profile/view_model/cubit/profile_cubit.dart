@@ -46,7 +46,4 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   void toggleAppNotifications(bool value) =>
       emit(state.copyWith(appNotifications: value));
-
-  // UI state only for now. Connect this to your app-wide ThemeMode later.
-  void toggleTheme(bool isDark) => emit(state.copyWith(isDarkMode: isDark));
 }

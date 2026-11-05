@@ -10,7 +10,6 @@ class ProfileState {
   final bool tripNotifications;
   final bool reviewNotifications;
   final bool appNotifications;
-  final bool isDarkMode;
   final String? errorMessage;
 
   const ProfileState({
@@ -21,7 +20,6 @@ class ProfileState {
     this.tripNotifications = true,
     this.reviewNotifications = true,
     this.appNotifications = true,
-    this.isDarkMode = false,
     this.errorMessage,
   });
 
@@ -33,7 +31,6 @@ class ProfileState {
     bool? tripNotifications,
     bool? reviewNotifications,
     bool? appNotifications,
-    bool? isDarkMode,
     String? errorMessage,
   }) {
     return ProfileState(
@@ -44,7 +41,6 @@ class ProfileState {
       tripNotifications: tripNotifications ?? this.tripNotifications,
       reviewNotifications: reviewNotifications ?? this.reviewNotifications,
       appNotifications: appNotifications ?? this.appNotifications,
-      isDarkMode: isDarkMode ?? this.isDarkMode,
       errorMessage: errorMessage,
     );
   }
