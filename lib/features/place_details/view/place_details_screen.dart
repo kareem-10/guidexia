@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tourist_app/core/utils/app_colors.dart';
 import 'package:tourist_app/core/widgets/favorite_icon_button.dart';
 import 'package:tourist_app/core/widgets/round_button.dart';
 import 'package:tourist_app/features/explore/data/models/place_model.dart';
@@ -18,6 +17,7 @@ class PlaceDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -26,7 +26,6 @@ class PlaceDetailsScreen extends StatelessWidget {
             pinned: true,
             backgroundColor: Colors.transparent,
             elevation: 0,
-
             leading: Padding(
               padding: EdgeInsets.all(8.w),
               child: RoundButton(
@@ -66,16 +65,15 @@ class PlaceDetailsScreen extends StatelessWidget {
                           );
                         },
                         errorWidget: (_, _, _) {
-                          return const Center(
+                          return Center(
                             child: Icon(
                               Icons.image_not_supported,
                               size: 40,
-                              color: Colors.grey,
+                              color: scheme.onSurfaceVariant,
                             ),
                           );
                         },
                       ),
-
                       Positioned.fill(
                         child: DecoratedBox(
                           decoration: BoxDecoration(
@@ -83,14 +81,13 @@ class PlaceDetailsScreen extends StatelessWidget {
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,
                               colors: [
-                                Colors.black.withValues(alpha: 0.15),
-                                Colors.black.withValues(alpha: 0.65),
+                                scheme.shadow.withValues(alpha: 0.15),
+                                scheme.shadow.withValues(alpha: 0.65),
                               ],
                             ),
                           ),
                         ),
                       ),
-
                       Positioned(
                         left: 20.w,
                         right: 20.w,
@@ -105,21 +102,19 @@ class PlaceDetailsScreen extends StatelessWidget {
                                   vertical: 5.h,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: AppColors.primaryColor,
+                                  color: scheme.primary,
                                   borderRadius: BorderRadius.circular(20.r),
                                 ),
                                 child: Text(
                                   'Featured',
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: scheme.onPrimary,
                                     fontSize: 10.sp,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
                               ),
-
                             SizedBox(height: 8.h),
-
                             Text(
                               place.name,
                               maxLines: 2,
@@ -130,9 +125,7 @@ class PlaceDetailsScreen extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-
                             SizedBox(height: 5.h),
-
                             Row(
                               children: [
                                 const Icon(
@@ -161,7 +154,6 @@ class PlaceDetailsScreen extends StatelessWidget {
               ),
             ),
           ),
-
           SliverToBoxAdapter(
             child: Padding(
               padding: EdgeInsets.fromLTRB(20.w, 20.h, 20.w, 30.h),
@@ -169,22 +161,15 @@ class PlaceDetailsScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   RatingSection(place: place),
-
                   SizedBox(height: 22.h),
-
                   AboutSection(description: place.description),
-
                   SizedBox(height: 22.h),
-
                   EntryFeeSection(entryFee: place.entryFee),
-
                   if (place.tags.isNotEmpty) ...[
                     SizedBox(height: 22.h),
                     TagsSection(tags: place.tags),
                   ],
-
                   SizedBox(height: 22.h),
-
                   LocationSection(place: place),
                 ],
               ),

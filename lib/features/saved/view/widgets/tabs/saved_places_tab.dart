@@ -36,7 +36,10 @@ class SavedPlacesTab extends StatelessWidget {
                   Text(
                     state.message,
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.grey, fontSize: 12.sp),
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      fontSize: 12.sp,
+                    ),
                   ),
                   SizedBox(height: 16.h),
                   FilledButton(

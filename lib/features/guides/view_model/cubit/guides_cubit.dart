@@ -14,7 +14,12 @@ class GuidesCubit extends Cubit<GuidesState> {
     emit(const GuidesLoading());
     try {
       _guides = await repo.getGuides();
-      emit(GuidesSuccess(List.unmodifiable(_guides), Set.unmodifiable(_favoriteIds)));
+      emit(
+        GuidesSuccess(
+          List.unmodifiable(_guides),
+          Set.unmodifiable(_favoriteIds),
+        ),
+      );
     } catch (_) {
       emit(const GuidesFailure('Could not load guides. Please try again.'));
     }
@@ -22,9 +27,12 @@ class GuidesCubit extends Cubit<GuidesState> {
 
   void toggleFavorite(int guideId) {
     if (!_favoriteIds.add(guideId)) _favoriteIds.remove(guideId);
-    emit(GuidesSuccess(List.unmodifiable(_guides), Set.unmodifiable(_favoriteIds)));
+    emit(
+      GuidesSuccess(List.unmodifiable(_guides), Set.unmodifiable(_favoriteIds)),
+    );
   }
 
   bool isFavorite(int guideId) => _favoriteIds.contains(guideId);
-  List<GuideModel> get favoriteGuides => _guides.where((g) => _favoriteIds.contains(g.id)).toList();
+  List<GuideModel> get favoriteGuides =>
+      _guides.where((g) => _favoriteIds.contains(g.id)).toList();
 }

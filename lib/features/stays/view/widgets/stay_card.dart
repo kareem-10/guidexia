@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tourist_app/core/utils/app_colors.dart';
 import 'package:tourist_app/core/widgets/favorite_icon_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -49,7 +48,7 @@ class StayCard extends StatelessWidget {
       margin: EdgeInsets.zero,
       clipBehavior: Clip.antiAlias,
       elevation: 2,
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.surface,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22.r)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,7 +60,6 @@ class StayCard extends StatelessWidget {
                     ? stay.thumbnailUrl
                     : stay.imageUrl,
               ),
-              //margin
               Padding(
                 padding: EdgeInsets.all(10.w),
                 child: Row(
@@ -73,13 +71,15 @@ class StayCard extends StatelessWidget {
                         vertical: 7.h,
                       ),
                       decoration: BoxDecoration(
-                        color: AppColors.primaryColor.withValues(alpha: 0.4),
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.primary.withValues(alpha: 0.85),
                         borderRadius: BorderRadius.circular(18),
                       ),
                       child: Text(
                         stay.type,
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.onPrimary,
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
                         ),
@@ -103,7 +103,8 @@ class StayCard extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(14),
                   ),
-                  backgroundColor: AppColors.primaryColor,
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  foregroundColor: Theme.of(context).colorScheme.onPrimary,
                 ),
                 child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,

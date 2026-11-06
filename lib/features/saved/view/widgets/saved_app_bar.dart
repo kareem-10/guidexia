@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tourist_app/core/utils/app_colors.dart';
 import 'package:tourist_app/core/widgets/app_bar_title.dart';
 
 class SavedAppBar extends StatelessWidget {
@@ -8,6 +7,7 @@ class SavedAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
     return AppBar(
       title: const AppBarTitle(text: 'Saved'),
       automaticallyImplyLeading: false,
@@ -18,7 +18,7 @@ class SavedAppBar extends StatelessWidget {
           child: Container(
             height: 46.h,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: scheme.surface,
               borderRadius: BorderRadius.circular(16.r),
             ),
             child: TabBar(
@@ -27,11 +27,11 @@ class SavedAppBar extends StatelessWidget {
               indicatorPadding: EdgeInsets.all(4.w),
               overlayColor: WidgetStateProperty.all(Colors.transparent),
               indicator: BoxDecoration(
-                color: AppColors.primaryColor.withValues(alpha: 0.12),
+                color: scheme.primary.withValues(alpha: 0.12),
                 borderRadius: BorderRadius.circular(16.r),
               ),
-              labelColor: AppColors.primaryColor,
-              unselectedLabelColor: Colors.black,
+              labelColor: scheme.primary,
+              unselectedLabelColor: scheme.onSurface,
               labelStyle: TextStyle(
                 fontSize: 12.sp,
                 fontWeight: FontWeight.w600,

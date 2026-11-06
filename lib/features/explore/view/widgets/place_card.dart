@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tourist_app/core/utils/app_colors.dart';
 import 'package:tourist_app/core/widgets/favorite_icon_button.dart';
 import 'package:tourist_app/features/explore/data/models/place_model.dart';
 import 'package:tourist_app/features/place_details/view/place_details_screen.dart';
@@ -13,6 +12,9 @@ class PlaceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+    final overlay = scheme.primary.withValues(alpha: 0.7);
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -22,9 +24,9 @@ class PlaceCard extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: scheme.surface,
           borderRadius: BorderRadius.circular(17.r),
-          border: Border.all(color: Colors.black.withValues(alpha: 0.1)),
+          border: Border.all(color: scheme.outlineVariant),
         ),
         clipBehavior: Clip.antiAlias,
         child: Column(
@@ -53,10 +55,10 @@ class PlaceCard extends StatelessWidget {
                           );
                         },
                         errorWidget: (_, _, _) {
-                          return const Center(
+                          return Center(
                             child: Icon(
                               Icons.image_not_supported,
-                              color: Colors.black54,
+                              color: scheme.onSurfaceVariant,
                             ),
                           );
                         },
@@ -72,12 +74,15 @@ class PlaceCard extends StatelessWidget {
                           vertical: 5.h,
                         ),
                         decoration: BoxDecoration(
-                          color: AppColors.primaryColor.withValues(alpha: 0.7),
+                          color: overlay,
                           borderRadius: BorderRadius.circular(20.r),
                         ),
                         child: Text(
                           _displayCategory(place.category),
-                          style: TextStyle(color: Colors.white, fontSize: 8.sp),
+                          style: TextStyle(
+                            color: scheme.onPrimary,
+                            fontSize: 8.sp,
+                          ),
                         ),
                       ),
                     ),
@@ -92,15 +97,13 @@ class PlaceCard extends StatelessWidget {
                             vertical: 4.h,
                           ),
                           decoration: BoxDecoration(
-                            color: AppColors.primaryColor.withValues(
-                              alpha: 0.7,
-                            ),
+                            color: overlay,
                             borderRadius: BorderRadius.circular(20.r),
                           ),
                           child: Text(
                             'Featured',
                             style: TextStyle(
-                              color: Colors.white,
+                              color: scheme.onPrimary,
                               fontSize: 8.sp,
                             ),
                           ),
@@ -131,21 +134,20 @@ class PlaceCard extends StatelessWidget {
                         place.name,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          color: Colors.black87,
+                        style: textTheme.titleSmall?.copyWith(
                           fontSize: 12.sp,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
 
-                    Icon(Icons.star, size: 15.sp, color: Colors.orange),
+                    Icon(Icons.star, size: 15.sp, color: scheme.tertiary),
 
                     SizedBox(width: 3.w),
 
                     Text(
                       place.averageRating.toStringAsFixed(1),
-                      style: TextStyle(color: Colors.orange, fontSize: 10.sp),
+                      style: TextStyle(color: scheme.tertiary, fontSize: 10.sp),
                     ),
                   ],
                 ),
@@ -160,7 +162,7 @@ class PlaceCard extends StatelessWidget {
                   children: [
                     Icon(
                       Icons.location_on_outlined,
-                      color: Colors.grey,
+                      color: scheme.onSurfaceVariant,
                       size: 13.sp,
                     ),
                     SizedBox(width: 3.w),
@@ -169,7 +171,10 @@ class PlaceCard extends StatelessWidget {
                         '${place.city}, ${place.country}',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(color: Colors.grey, fontSize: 9.sp),
+                        style: TextStyle(
+                          color: scheme.onSurfaceVariant,
+                          fontSize: 9.sp,
+                        ),
                       ),
                     ),
                   ],

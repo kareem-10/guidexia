@@ -15,7 +15,10 @@ class ExploreHeader extends StatelessWidget {
         verticalSpace(5),
         Text(
           'Find the places you’ll never forget.',
-          style: TextStyle(fontSize: 12.sp, color: Colors.grey),
+          style: TextStyle(
+            fontSize: 12.sp,
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
+          ),
         ),
       ],
     );

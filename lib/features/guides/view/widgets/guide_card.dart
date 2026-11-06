@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tourist_app/core/helpers/spacing.dart';
-import 'package:tourist_app/core/utils/app_colors.dart';
 import 'package:tourist_app/core/widgets/favorite_icon_button.dart';
 import 'package:tourist_app/features/guides/view/screens/guide_details_screen.dart';
 import '../../data/models/guide_model.dart';
@@ -13,8 +12,9 @@ class GuideCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
     return Material(
-      color: Colors.white,
+      color: scheme.surface,
       borderRadius: BorderRadius.circular(18),
       child: InkWell(
         borderRadius: BorderRadius.circular(18),
@@ -26,7 +26,7 @@ class GuideCard extends StatelessWidget {
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(18),
-            border: Border.all(color: const Color(0xFFE6E9EC)),
+            border: Border.all(color: scheme.outlineVariant),
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,14 +43,14 @@ class GuideCard extends StatelessWidget {
                     placeholder: (_, _) => Container(
                       width: 76.w,
                       height: 88.h,
-                      color: const Color(0xFFE9EFF0),
-                      child: const Icon(Icons.person, color: Colors.grey),
+                      color: scheme.surfaceContainerHighest,
+                      child: Icon(Icons.person, color: scheme.onSurfaceVariant),
                     ),
                     errorWidget: (_, _, _) => Container(
                       width: 76.w,
                       height: 88.h,
-                      color: const Color(0xFFE9EFF0),
-                      child: const Icon(Icons.person, color: Colors.grey),
+                      color: scheme.surfaceContainerHighest,
+                      child: Icon(Icons.person, color: scheme.onSurfaceVariant),
                     ),
                   ),
                 ),
@@ -70,14 +70,14 @@ class GuideCard extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 15.sp,
                               fontWeight: FontWeight.w600,
-                              color: Color(0xFF242B31),
+                              color: scheme.onSurface,
                             ),
                           ),
                         ),
                         if (guide.isVerified)
                           Icon(
                             Icons.verified,
-                            color: AppColors.primaryColor,
+                            color: scheme.primary,
                             size: 17.sp,
                           ),
                       ],
@@ -88,7 +88,7 @@ class GuideCard extends StatelessWidget {
                         Icon(
                           Icons.location_on_outlined,
                           size: 15.sp,
-                          color: Colors.blueGrey,
+                          color: scheme.onSurfaceVariant,
                         ),
                         horizontalSpace(3),
                         Expanded(
@@ -100,7 +100,7 @@ class GuideCard extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               fontSize: 11.sp,
-                              color: Colors.blueGrey,
+                              color: scheme.onSurfaceVariant,
                             ),
                           ),
                         ),
@@ -111,7 +111,7 @@ class GuideCard extends StatelessWidget {
                       children: [
                         Icon(
                           Icons.star_rounded,
-                          color: Color(0xFFFFB547),
+                          color: scheme.tertiary,
                           size: 17.sp,
                         ),
                         horizontalSpace(3),
@@ -120,6 +120,7 @@ class GuideCard extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 12.sp,
                             fontWeight: FontWeight.w700,
+                            color: scheme.onSurface,
                           ),
                         ),
                         horizontalSpace(4),
@@ -127,7 +128,7 @@ class GuideCard extends StatelessWidget {
                           '(${guide.reviewCount})',
                           style: TextStyle(
                             fontSize: 11.sp,
-                            color: Colors.blueGrey,
+                            color: scheme.onSurfaceVariant,
                           ),
                         ),
                       ],
@@ -141,7 +142,7 @@ class GuideCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontSize: 11.sp,
-                        color: AppColors.primaryColor,
+                        color: scheme.primary,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -152,7 +153,7 @@ class GuideCard extends StatelessWidget {
                           '${guide.experienceYears} yrs experience',
                           style: TextStyle(
                             fontSize: 11.sp,
-                            color: Colors.blueGrey,
+                            color: scheme.onSurfaceVariant,
                           ),
                         ),
                         const Spacer(),
@@ -161,7 +162,7 @@ class GuideCard extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 12.sp,
                             fontWeight: FontWeight.w800,
-                            color: AppColors.primaryColor,
+                            color: scheme.primary,
                           ),
                         ),
                       ],

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tourist_app/core/utils/app_colors.dart';
 
 class TagsSection extends StatelessWidget {
   final List<String> tags;
@@ -9,6 +8,7 @@ class TagsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -17,12 +17,10 @@ class TagsSection extends StatelessWidget {
           style: TextStyle(
             fontSize: 18.sp,
             fontWeight: FontWeight.bold,
-            color: Colors.black,
+            color: scheme.onSurface,
           ),
         ),
-
         SizedBox(height: 10.h),
-
         Wrap(
           spacing: 8.w,
           runSpacing: 8.h,
@@ -30,17 +28,17 @@ class TagsSection extends StatelessWidget {
             return Container(
               padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 7.h),
               decoration: BoxDecoration(
-                color: AppColors.primaryColor.withValues(alpha: 0.08),
+                color: scheme.primary.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(20.r),
                 border: Border.all(
-                  color: AppColors.primaryColor.withValues(alpha: 0.15),
+                  color: scheme.primary.withValues(alpha: 0.18),
                 ),
               ),
               child: Text(
                 tag,
                 style: TextStyle(
                   fontSize: 10.sp,
-                  color: AppColors.primaryColor,
+                  color: scheme.primary,
                   fontWeight: FontWeight.w500,
                 ),
               ),

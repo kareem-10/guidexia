@@ -16,7 +16,7 @@ class AboutSection extends StatelessWidget {
           style: TextStyle(
             fontSize: 18.sp,
             fontWeight: FontWeight.bold,
-            color: Colors.black,
+            color: Theme.of(context).colorScheme.onSurface,
           ),
         ),
 
@@ -29,7 +29,7 @@ class AboutSection extends StatelessWidget {
           style: TextStyle(
             fontSize: 12.sp,
             height: 1.6,
-            color: Colors.grey.shade700,
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
           ),
         ),
       ],

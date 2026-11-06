@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tourist_app/core/utils/app_colors.dart';
 import '../../data/models/stay_model.dart';
 
 class StayDetails extends StatelessWidget {
@@ -10,6 +9,7 @@ class StayDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -24,7 +24,7 @@ class StayDetails extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 20.sp,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                    color: scheme.onSurface,
                   ),
                 ),
               ),
@@ -37,14 +37,14 @@ class StayDetails extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 20.sp,
                       fontWeight: FontWeight.bold,
-                      color: AppColors.primaryColor,
+                      color: scheme.primary,
                     ),
                   ),
                   Text(
                     'per night',
                     style: TextStyle(
                       fontSize: 12.sp,
-                      color: Colors.grey,
+                      color: scheme.onSurfaceVariant,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -55,12 +55,19 @@ class StayDetails extends StatelessWidget {
           const SizedBox(height: 8),
           Row(
             children: [
-              Icon(Icons.location_on_outlined, size: 18, color: Colors.grey),
+              Icon(
+                Icons.location_on_outlined,
+                size: 18,
+                color: scheme.onSurfaceVariant,
+              ),
               const SizedBox(width: 4),
               Expanded(
                 child: Text(
                   '${stay.city}, ${stay.country}',
-                  style: TextStyle(fontSize: 14.sp, color: Colors.grey),
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    color: scheme.onSurfaceVariant,
+                  ),
                 ),
               ),
             ],
@@ -71,18 +78,24 @@ class StayDetails extends StatelessWidget {
             runSpacing: 4,
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
-              const Icon(Icons.star, size: 18, color: Colors.amber),
+              Icon(Icons.star, size: 18, color: scheme.tertiary),
               Text(
                 stay.averageRating.toStringAsFixed(1),
-                style: TextStyle(fontSize: 14.sp, color: Colors.amber),
+                style: TextStyle(fontSize: 14.sp, color: scheme.tertiary),
               ),
               Text(
                 '(${stay.reviewCount} reviews)',
-                style: TextStyle(fontSize: 12.sp, color: Colors.grey),
+                style: TextStyle(
+                  fontSize: 12.sp,
+                  color: scheme.onSurfaceVariant,
+                ),
               ),
               Text(
                 ' · ${'★' * stay.starRating}',
-                style: TextStyle(fontSize: 12.sp, color: Colors.grey),
+                style: TextStyle(
+                  fontSize: 12.sp,
+                  color: scheme.onSurfaceVariant,
+                ),
               ),
             ],
           ),
@@ -98,12 +111,15 @@ class StayDetails extends StatelessWidget {
                     vertical: 6,
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.grey.shade200,
+                    color: scheme.surfaceContainerHighest,
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(
                     amenity,
-                    style: TextStyle(fontSize: 12.sp, color: Colors.grey),
+                    style: TextStyle(
+                      fontSize: 12.sp,
+                      color: scheme.onSurfaceVariant,
+                    ),
                   ),
                 );
               }).toList(),

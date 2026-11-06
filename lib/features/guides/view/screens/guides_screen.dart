@@ -86,10 +86,14 @@ class _GuidesViewState extends State<_GuidesView> {
                         )
                         .toList();
                     if (guides.isEmpty) {
-                      return const Center(
+                      return Center(
                         child: Text(
                           'No guides found.',
-                          style: TextStyle(color: Colors.blueGrey),
+                          style: TextStyle(
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.onSurfaceVariant,
+                          ),
                         ),
                       );
                     }
@@ -101,7 +105,9 @@ class _GuidesViewState extends State<_GuidesView> {
                           child: Text(
                             '${guides.length} guides available',
                             style: TextStyle(
-                              color: Colors.blueGrey,
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.onSurfaceVariant,
                               fontSize: 12.sp,
                             ),
                           ),

@@ -79,14 +79,17 @@ class _StaysLoading extends StatelessWidget {
         return Container(
           height: 350,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.surface,
             borderRadius: BorderRadius.circular(22),
           ),
           clipBehavior: Clip.antiAlias,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(height: 210, color: Colors.grey.shade200),
+              Container(
+                height: 210,
+                color: Theme.of(context).colorScheme.surfaceContainerHighest,
+              ),
               const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -94,7 +97,9 @@ class _StaysLoading extends StatelessWidget {
                   height: 18,
                   width: 180,
                   decoration: BoxDecoration(
-                    color: Colors.grey.shade200,
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.surfaceContainerHighest,
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
@@ -106,7 +111,9 @@ class _StaysLoading extends StatelessWidget {
                   height: 14,
                   width: 140,
                   decoration: BoxDecoration(
-                    color: Colors.grey.shade200,
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.surfaceContainerHighest,
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),

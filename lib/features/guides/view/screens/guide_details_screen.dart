@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tourist_app/core/utils/app_colors.dart';
 import 'package:tourist_app/core/widgets/favorite_icon_button.dart';
 import 'package:tourist_app/core/widgets/round_button.dart';
 import 'package:tourist_app/features/guides/view/widgets/state_widget.dart';
@@ -19,6 +18,7 @@ class GuideDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -58,11 +58,11 @@ class GuideDetailsScreen extends StatelessWidget {
                         imageUrl: guide.coverImageUrl ?? '',
                         fit: BoxFit.cover,
                         errorWidget: (_, _, _) => Container(
-                          color: const Color(0xFFE9EFF0),
+                          color: scheme.surfaceContainerHighest,
                           child: Icon(
                             Icons.landscape,
                             size: 64,
-                            color: AppColors.primaryColor,
+                            color: scheme.primary,
                           ),
                         ),
                       ),
@@ -73,8 +73,8 @@ class GuideDetailsScreen extends StatelessWidget {
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,
                               colors: [
-                                Colors.black.withValues(alpha: 0.15),
-                                Colors.black.withValues(alpha: 0.65),
+                                scheme.shadow.withValues(alpha: 0.15),
+                                scheme.shadow.withValues(alpha: 0.65),
                               ],
                             ),
                           ),
@@ -103,9 +103,9 @@ class GuideDetailsScreen extends StatelessWidget {
                                 ),
                                 if (guide.isVerified) ...[
                                   SizedBox(width: 6.w),
-                                  const Icon(
+                                  Icon(
                                     Icons.verified,
-                                    color: Colors.lightBlueAccent,
+                                    color: scheme.inversePrimary,
                                     size: 20,
                                   ),
                                 ],
@@ -122,9 +122,9 @@ class GuideDetailsScreen extends StatelessWidget {
                             SizedBox(height: 8.h),
                             Row(
                               children: [
-                                const Icon(
+                                Icon(
                                   Icons.star_rounded,
-                                  color: Color(0xFFFFC15A),
+                                  color: scheme.tertiary,
                                   size: 19,
                                 ),
                                 SizedBox(width: 4.w),
@@ -159,8 +159,8 @@ class GuideDetailsScreen extends StatelessWidget {
                       horizontal: 8.w,
                     ),
                     decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(color: const Color(0xFFE5E9EC)),
+                      color: scheme.surface,
+                      border: Border.all(color: scheme.outlineVariant),
                       borderRadius: BorderRadius.circular(18.r),
                     ),
                     child: Row(
@@ -181,40 +181,40 @@ class GuideDetailsScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 23.h),
-                  _sectionTitle('About ${guide.name}'),
+                  _sectionTitle(context, 'About ${guide.name}'),
                   SizedBox(height: 8.h),
                   Text(
                     guide.bio.isEmpty
                         ? 'A guide profile description will be available when the backend provides it.'
                         : guide.bio,
                     style: TextStyle(
-                      color: const Color(0xFF59636B),
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
                       height: 1.55,
                       fontSize: 14.sp,
                     ),
                   ),
                   if (_split(guide.specialties).isNotEmpty) ...[
                     SizedBox(height: 23.h),
-                    _sectionTitle('Specialties'),
+                    _sectionTitle(context, 'Specialties'),
                     SizedBox(height: 10.h),
                     Wrap(
                       spacing: 8.w,
                       runSpacing: 8.h,
                       children: _split(
                         guide.specialties,
-                      ).map((s) => _chip(s)).toList(),
+                      ).map((s) => _chip(context, s)).toList(),
                     ),
                   ],
                   if (_split(guide.languages).isNotEmpty) ...[
                     SizedBox(height: 23.h),
-                    _sectionTitle('Languages'),
+                    _sectionTitle(context, 'Languages'),
                     SizedBox(height: 10.h),
                     Wrap(
                       spacing: 8.w,
                       runSpacing: 8.h,
                       children: _split(
                         guide.languages,
-                      ).map((s) => _chip(s)).toList(),
+                      ).map((s) => _chip(context, s)).toList(),
                     ),
                   ],
                   SizedBox(height: 90.h),
@@ -227,46 +227,52 @@ class GuideDetailsScreen extends StatelessWidget {
       bottomNavigationBar: SafeArea(
         child: Container(
           padding: EdgeInsets.fromLTRB(18.w, 12.h, 18.w, 12.h),
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            border: Border(top: BorderSide(color: Color(0xFFE5E9EC))),
+          decoration: BoxDecoration(
+            color: scheme.surface,
+            border: Border(top: BorderSide(color: scheme.outlineVariant)),
           ),
           child: FilledButton(
             onPressed: null,
             style: FilledButton.styleFrom(
-              backgroundColor: AppColors.primaryColor,
-              disabledBackgroundColor: const Color(0xFFB8CBCD),
+              backgroundColor: scheme.primary,
+              disabledBackgroundColor: scheme.surfaceContainerHighest,
               padding: EdgeInsets.symmetric(vertical: 15.h),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(13.r),
               ),
             ),
-            child: const Text('Booking unavailable'),
+            child: Text(
+              'Booking unavailable',
+              style: TextStyle(color: scheme.onSurfaceVariant),
+            ),
           ),
         ),
       ),
     );
   }
 
-  Widget _sectionTitle(String value) => Text(
+  Widget _sectionTitle(BuildContext context, String value) => Text(
     value,
     style: TextStyle(
       fontSize: 17.sp,
-      color: const Color(0xFF252D33),
+      color: Theme.of(context).colorScheme.onSurface,
       fontWeight: FontWeight.w800,
     ),
   );
 
-  Widget _chip(String value) => Container(
+  Widget _chip(BuildContext context, String value) => Container(
     padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
     decoration: BoxDecoration(
-      color: Colors.white,
-      border: Border.all(color: const Color(0xFFE0E6E8)),
+      color: Theme.of(context).colorScheme.surface,
+      border: Border.all(color: Theme.of(context).colorScheme.outlineVariant),
       borderRadius: BorderRadius.circular(20.r),
     ),
     child: Text(
       value,
-      style: TextStyle(fontSize: 12.sp, color: const Color(0xFF59636B)),
+      style: TextStyle(
+        fontSize: 12.sp,
+        color: Theme.of(context).colorScheme.onSurfaceVariant,
+      ),
     ),
   );
 }

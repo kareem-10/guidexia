@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tourist_app/core/utils/app_colors.dart';
 import 'package:tourist_app/features/explore/view_model/cubit/explore_cubit.dart';
 import 'package:tourist_app/features/explore/view_model/cubit/explore_state.dart';
 
@@ -22,6 +21,7 @@ class CategoryList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
     return SizedBox(
       height: 38.h,
       child: ListView.separated(
@@ -46,17 +46,19 @@ class CategoryList extends StatelessWidget {
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     color: selected
-                        ? AppColors.primaryColor
-                        : AppColors.primaryColor.withValues(alpha: 0.15),
+                        ? scheme.primary
+                        : scheme.primary.withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(20.r),
                     border: Border.all(
-                      color: selected ? Colors.white54 : Colors.transparent,
+                      color: selected
+                          ? scheme.outlineVariant
+                          : Colors.transparent,
                     ),
                   ),
                   child: Text(
                     category['name']!,
                     style: TextStyle(
-                      color: selected ? Colors.white : Colors.black,
+                      color: selected ? scheme.onPrimary : scheme.onSurface,
                       fontSize: 11.sp,
                     ),
                   ),

@@ -9,10 +9,11 @@ class RatingSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
     return Container(
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: scheme.surface,
         borderRadius: BorderRadius.circular(16.r),
       ),
       child: Row(
@@ -21,18 +22,12 @@ class RatingSection extends StatelessWidget {
             width: 48.w,
             height: 48.w,
             decoration: BoxDecoration(
-              color: Colors.orange.withValues(alpha: 0.12),
+              color: scheme.tertiary.withValues(alpha: 0.14),
               borderRadius: BorderRadius.circular(14.r),
             ),
-            child: const Icon(
-              Icons.star_rounded,
-              color: Colors.orange,
-              size: 28,
-            ),
+            child: Icon(Icons.star_rounded, color: scheme.tertiary, size: 28),
           ),
-
           SizedBox(width: 12.w),
-
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -41,25 +36,26 @@ class RatingSection extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 19.sp,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black,
+                  color: scheme.onSurface,
                 ),
               ),
               SizedBox(height: 2.h),
               Text(
                 '${place.reviewCount} reviews',
-                style: TextStyle(fontSize: 11.sp, color: Colors.grey),
+                style: TextStyle(
+                  fontSize: 11.sp,
+                  color: scheme.onSurfaceVariant,
+                ),
               ),
             ],
           ),
-
           const Spacer(),
-
           Text(
             _ratingText(place.averageRating),
             style: TextStyle(
               fontSize: 12.sp,
               fontWeight: FontWeight.w600,
-              color: Colors.grey.shade700,
+              color: scheme.onSurfaceVariant,
             ),
           ),
         ],

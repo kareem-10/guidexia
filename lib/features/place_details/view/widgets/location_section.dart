@@ -9,6 +9,7 @@ class LocationSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
     final hasCoordinates = place.latitude != null && place.longitude != null;
 
     return Column(
@@ -19,17 +20,15 @@ class LocationSection extends StatelessWidget {
           style: TextStyle(
             fontSize: 18.sp,
             fontWeight: FontWeight.bold,
-            color: Colors.black,
+            color: scheme.onSurface,
           ),
         ),
-
         SizedBox(height: 10.h),
-
         Container(
           width: double.infinity,
           padding: EdgeInsets.all(16.w),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: scheme.surface,
             borderRadius: BorderRadius.circular(16.r),
           ),
           child: Row(
@@ -38,17 +37,12 @@ class LocationSection extends StatelessWidget {
                 width: 45.w,
                 height: 45.w,
                 decoration: BoxDecoration(
-                  color: Colors.red.withValues(alpha: 0.08),
+                  color: scheme.error.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(13.r),
                 ),
-                child: const Icon(
-                  Icons.location_on_outlined,
-                  color: Colors.red,
-                ),
+                child: Icon(Icons.location_on_outlined, color: scheme.error),
               ),
-
               SizedBox(width: 12.w),
-
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,16 +52,18 @@ class LocationSection extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 13.sp,
                         fontWeight: FontWeight.w600,
-                        color: Colors.black,
+                        color: scheme.onSurface,
                       ),
                     ),
-
                     if (hasCoordinates) ...[
                       SizedBox(height: 4.h),
                       Text(
                         '${place.latitude!.toStringAsFixed(4)}, '
                         '${place.longitude!.toStringAsFixed(4)}',
-                        style: TextStyle(fontSize: 9.sp, color: Colors.grey),
+                        style: TextStyle(
+                          fontSize: 9.sp,
+                          color: scheme.onSurfaceVariant,
+                        ),
                       ),
                     ],
                   ],

@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tourist_app/core/utils/app_colors.dart';
 
-// ignore: must_be_immutable
 class StatWidget extends StatelessWidget {
-  StatWidget({super.key, required this.value, required this.label});
-  String value;
-  String label;
+  const StatWidget({super.key, required this.value, required this.label});
+  final String value;
+  final String label;
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
     return Expanded(
       child: Column(
         children: [
@@ -17,14 +16,14 @@ class StatWidget extends StatelessWidget {
             value,
             style: TextStyle(
               fontSize: 18.sp,
-              color: AppColors.primaryColor,
+              color: scheme.primary,
               fontWeight: FontWeight.w800,
             ),
           ),
           SizedBox(height: 4.h),
           Text(
             label,
-            style: TextStyle(fontSize: 11.sp, color: Colors.blueGrey),
+            style: TextStyle(fontSize: 11.sp, color: scheme.onSurfaceVariant),
           ),
         ],
       ),

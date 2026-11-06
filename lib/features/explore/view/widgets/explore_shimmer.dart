@@ -29,19 +29,26 @@ class ShimmerPlaceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final base = scheme.brightness == Brightness.dark
+        ? const Color(0xFF2C2C2C)
+        : const Color(0xFFE7EAEC);
+    final highlight = scheme.brightness == Brightness.dark
+        ? const Color(0xFF3A3A3A)
+        : const Color(0xFFF7F8F9);
     return Shimmer.fromColors(
-      baseColor: const Color(0xFFE7EAEC),
-      highlightColor: const Color(0xFFF7F8F9),
+      baseColor: base,
+      highlightColor: highlight,
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: scheme.surface,
           borderRadius: BorderRadius.circular(17.r),
         ),
         clipBehavior: Clip.antiAlias,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(flex: 6, child: Container(color: Colors.white)),
+            Expanded(flex: 6, child: Container(color: scheme.surface)),
 
             Expanded(
               flex: 2,
@@ -53,7 +60,7 @@ class ShimmerPlaceCard extends StatelessWidget {
                       child: Container(
                         height: 12.h,
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: scheme.surface,
                           borderRadius: BorderRadius.circular(5.r),
                         ),
                       ),
@@ -65,7 +72,7 @@ class ShimmerPlaceCard extends StatelessWidget {
                       width: 28.w,
                       height: 10.h,
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: scheme.surface,
                         borderRadius: BorderRadius.circular(5.r),
                       ),
                     ),
@@ -82,7 +89,7 @@ class ShimmerPlaceCard extends StatelessWidget {
                   height: 8.h,
                   width: 55.w,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: scheme.surface,
                     borderRadius: BorderRadius.circular(5.r),
                   ),
                 ),

@@ -34,8 +34,10 @@ class GuideModel {
   });
 
   factory GuideModel.fromJson(Map<String, dynamic> json) {
-    double asDouble(dynamic value) => value is num ? value.toDouble() : double.tryParse('$value') ?? 0;
-    int asInt(dynamic value) => value is num ? value.toInt() : int.tryParse('$value') ?? 0;
+    double asDouble(dynamic value) =>
+        value is num ? value.toDouble() : double.tryParse('$value') ?? 0;
+    int asInt(dynamic value) =>
+        value is num ? value.toInt() : int.tryParse('$value') ?? 0;
     return GuideModel(
       id: asInt(json['id']),
       userId: json['userId']?.toString() ?? '',

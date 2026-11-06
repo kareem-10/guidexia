@@ -16,12 +16,12 @@ class StayImage extends StatelessWidget {
         return Container(
           height: 210,
           width: double.infinity,
-          color: Colors.grey.shade200,
+          color: Theme.of(context).colorScheme.surfaceContainerHighest,
           alignment: Alignment.center,
           child: Icon(
             Icons.hotel_outlined,
             size: 48,
-            color: Colors.grey.shade500,
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
           ),
         );
       },
@@ -30,7 +30,7 @@ class StayImage extends StatelessWidget {
         return Container(
           height: 210,
           width: double.infinity,
-          color: Colors.grey.shade200,
+          color: Theme.of(context).colorScheme.surfaceContainerHighest,
           alignment: Alignment.center,
           child: Image(image: const AssetImage('assets/images/loading.gif')),
         );
