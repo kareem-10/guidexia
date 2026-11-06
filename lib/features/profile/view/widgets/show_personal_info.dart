@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:tourist_app/core/utils/app_colors.dart';
 import 'package:tourist_app/features/profile/data/models/profile_model.dart';
 import 'package:tourist_app/features/profile/view/widgets/show_edit_profile.dart';
 
 void showPersonalInfo(BuildContext context, ProfileModel p) {
+  final scheme = Theme.of(context).colorScheme;
   showModalBottomSheet(
     context: context,
     showDragHandle: true,
-    backgroundColor: Colors.white,
+    backgroundColor: scheme.surface,
     builder: (_) => Padding(
       padding: const EdgeInsets.fromLTRB(22, 8, 22, 30),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Personal information',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.titleLarge,
           ),
           const SizedBox(height: 18),
           _InfoRow(label: 'Full name', value: p.name),
@@ -28,9 +28,6 @@ void showPersonalInfo(BuildContext context, ProfileModel p) {
           SizedBox(
             width: double.infinity,
             child: FilledButton(
-              style: FilledButton.styleFrom(
-                backgroundColor: AppColors.primaryColor,
-              ),
               onPressed: () {
                 Navigator.pop(context);
                 showEditProfile(context, p);
@@ -58,7 +55,12 @@ class _InfoRow extends StatelessWidget {
       children: [
         SizedBox(
           width: 95,
-          child: Text(label, style: const TextStyle(color: Color(0xFF77796F))),
+          child: Text(
+            label,
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
+          ),
         ),
         Expanded(
           child: Text(
@@ -70,3 +72,4 @@ class _InfoRow extends StatelessWidget {
     ),
   );
 }
+

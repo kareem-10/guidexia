@@ -10,6 +10,7 @@ class PickImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
     return BlocConsumer<SignupCubit, SignupState>(
       listener: (context, state) {},
       builder: (context, state) {
@@ -18,7 +19,7 @@ class PickImageWidget extends StatelessWidget {
           height: 130,
           child: context.read<SignupCubit>().profilePic == null
               ? CircleAvatar(
-                  backgroundColor: Colors.grey.shade200,
+                  backgroundColor: scheme.surfaceContainerHighest,
                   backgroundImage: const AssetImage("assets/images/avatar.png"),
                   child: Stack(
                     children: [
@@ -31,8 +32,11 @@ class PickImageWidget extends StatelessWidget {
                             height: 50,
                             width: 50,
                             decoration: BoxDecoration(
-                              color: Colors.blue.shade400,
-                              border: Border.all(color: Colors.white, width: 3),
+                              color: scheme.primary,
+                              border: Border.all(
+                                color: scheme.surface,
+                                width: 3,
+                              ),
                               borderRadius: BorderRadius.circular(25),
                             ),
                             child: GestureDetector(
@@ -46,9 +50,9 @@ class PickImageWidget extends StatelessWidget {
                                           .uploadProfilePic(value!),
                                     );
                               },
-                              child: const Icon(
+                              child: Icon(
                                 Icons.camera_alt_sharp,
-                                color: Colors.white,
+                                color: scheme.onPrimary,
                                 size: 25,
                               ),
                             ),

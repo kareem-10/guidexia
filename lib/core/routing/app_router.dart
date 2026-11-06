@@ -11,6 +11,7 @@ import 'package:tourist_app/features/signup/view_model/cubit/signup_cubit.dart';
 class AppRouter {
   Route? generateRoute(RouteSettings settings) {
     //this arguments to be passed in any screen like this ( arguments as ClassName )
+    // ignore: unused_local_variable
     final arguments = settings.arguments;
 
     switch (settings.name) {

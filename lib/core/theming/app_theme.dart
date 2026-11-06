@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tourist_app/core/theming/app_text_theme.dart';
 import 'package:tourist_app/core/theming/font_weight_helper.dart';
@@ -149,6 +150,10 @@ class AppTheme {
       appBarTheme: AppBarTheme(
         backgroundColor: AppColors.darkSurface,
         foregroundColor: AppColors.darkOnSurface,
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarColor: Colors.transparent,
+          statusBarIconBrightness: Brightness.light,
+        ),
         elevation: 0,
         centerTitle: false,
         titleTextStyle: textTheme.titleLarge,

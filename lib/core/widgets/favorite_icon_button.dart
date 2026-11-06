@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tourist_app/core/utils/app_colors.dart';
 import 'package:tourist_app/features/saved/view_model/cubit/saved_cubit.dart';
 import 'package:tourist_app/features/saved/view_model/cubit/saved_state.dart';
+
 
 class FavoriteIconButton extends StatelessWidget {
   final int entityId;
@@ -21,6 +21,7 @@ class FavoriteIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
     return BlocBuilder<SavedCubit, SavedState>(
       builder: (context, state) {
         final cubit = context.read<SavedCubit>();
@@ -41,7 +42,7 @@ class FavoriteIconButton extends StatelessWidget {
           height: 36.w,
           decoration: BoxDecoration(
             color: overlay
-                ? AppColors.primaryColor.withValues(alpha: 0.2)
+                ? scheme.primary.withValues(alpha: 0.2)
                 : Colors.transparent,
             shape: BoxShape.circle,
           ),
@@ -57,10 +58,10 @@ class FavoriteIconButton extends StatelessWidget {
             icon: Icon(
               isSaved ? Icons.favorite : Icons.favorite_border,
               color: isSaved
-                  ? AppColors.primaryColor
+                  ? scheme.primary
                   : overlay
-                  ? Colors.white
-                  : AppColors.primaryColor.withValues(alpha: 0.4),
+                  ? scheme.surface
+                  : scheme.primary.withValues(alpha: 0.4),
               size: (iconSize ?? 19).sp,
             ),
           ),

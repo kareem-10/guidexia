@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppBarTitle extends StatelessWidget {
@@ -8,10 +8,9 @@ class AppBarTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: TextStyle(
+      style: Theme.of(context).textTheme.headlineMedium?.copyWith(
         fontSize: 27.sp,
         fontWeight: FontWeight.w500,
-        color: Color(0xFF242B31),
       ),
     );
   }

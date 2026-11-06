@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tourist_app/core/utils/app_colors.dart';
 
 void confirmLogout(BuildContext context) {
   showDialog<void>(
@@ -12,12 +11,12 @@ void confirmLogout(BuildContext context) {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(dialogContext),
-          child: const Text('Cancel', style: TextStyle(color: Colors.red)),
+          child: Text(
+            'Cancel',
+            style: TextStyle(color: Theme.of(context).colorScheme.error),
+          ),
         ),
         FilledButton(
-          style: FilledButton.styleFrom(
-            backgroundColor: AppColors.primaryColor,
-          ),
           onPressed: () {
             Navigator.pop(dialogContext);
             ScaffoldMessenger.of(context).showSnackBar(
@@ -30,3 +29,4 @@ void confirmLogout(BuildContext context) {
     ),
   );
 }
+

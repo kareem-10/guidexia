@@ -28,10 +28,9 @@ class ListSheet extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(6, 0, 6, 14),
                 child: Text(
                   title,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
                 ),
               ),
               if (isEmpty)

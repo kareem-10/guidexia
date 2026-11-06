@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tourist_app/core/functions/show_toast.dart';
-import 'package:tourist_app/core/utils/app_colors.dart';
 import 'package:tourist_app/features/profile/data/models/profile_model.dart';
 import 'package:tourist_app/features/profile/view_model/cubit/profile_cubit.dart';
 
@@ -58,7 +57,7 @@ class _EditProfileDialogState extends State<EditProfileDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       title: const Text('Edit profile'),
       content: SingleChildScrollView(
         child: Column(
@@ -75,12 +74,12 @@ class _EditProfileDialogState extends State<EditProfileDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: Text('Cancel', style: TextStyle(color: Colors.red.shade600)),
+          child: Text(
+            'Cancel',
+            style: TextStyle(color: Theme.of(context).colorScheme.error),
+          ),
         ),
         FilledButton(
-          style: FilledButton.styleFrom(
-            backgroundColor: AppColors.primaryColor,
-          ),
           onPressed: () {
             Navigator.pop(
               context,
@@ -93,7 +92,7 @@ class _EditProfileDialogState extends State<EditProfileDialog> {
               ),
             );
           },
-          child: const Text('Save', style: TextStyle(color: Colors.white)),
+          child: const Text('Save'),
         ),
       ],
     );
@@ -113,21 +112,9 @@ class _EditField extends StatelessWidget {
       controller: controller,
       decoration: InputDecoration(
         labelText: label,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: AppColors.primaryColor),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: AppColors.primaryColor, width: 2),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: AppColors.primaryColor),
-        ),
-        labelStyle: TextStyle(color: AppColors.primaryColor),
-        floatingLabelStyle: TextStyle(color: AppColors.primaryColor),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
       ),
     ),
   );
 }
+

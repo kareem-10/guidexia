@@ -34,7 +34,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: AppBarTitle(text: 'Profile'),
+        title: const AppBarTitle(text: 'Profile'),
       ),
       body: BlocBuilder<ProfileCubit, ProfileState>(
         builder: (context, state) {
@@ -60,6 +60,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           }
 
           final profile = state.profile!;
+          final scheme = Theme.of(context).colorScheme;
           return ListView(
             padding: const EdgeInsets.fromLTRB(20, 8, 20, 28),
             children: [
@@ -70,9 +71,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               const ProfileSectionTitle(title: 'Your account'),
               Container(
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: scheme.surface,
                   borderRadius: BorderRadius.circular(18),
-                  border: Border.all(color: const Color(0xFFE7E7DF)),
+                  border: Border.all(color: scheme.outlineVariant),
                 ),
                 clipBehavior: Clip.antiAlias,
                 child: Column(
@@ -128,10 +129,10 @@ class _MenuDivider extends StatelessWidget {
   const _MenuDivider();
 
   @override
-  Widget build(BuildContext context) => const Divider(
+  Widget build(BuildContext context) => Divider(
     height: 1,
     thickness: 1,
-    color: Color(0xFFE7E7DF),
+    color: Theme.of(context).colorScheme.outlineVariant,
     indent: 12,
     endIndent: 12,
   );

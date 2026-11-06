@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tourist_app/core/utils/app_colors.dart';
 import '../../data/models/profile_model.dart';
 
 class ProfileHeader extends StatelessWidget {
@@ -10,27 +9,25 @@ class ProfileHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: scheme.surface,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: const Color(0xFFE7E7DF)),
+        border: Border.all(color: scheme.outlineVariant),
       ),
       child: Row(
         children: [
           CircleAvatar(
             radius: 31,
-            backgroundColor: const Color(0xFFE7EDE4),
+            backgroundColor: scheme.surfaceContainerHighest,
             backgroundImage: profile.imageUrl == null
                 ? null
                 : NetworkImage(profile.imageUrl!),
             child: profile.imageUrl == null
-                ? Icon(
-                    Icons.person_rounded,
-                    color: AppColors.primaryColor,
-                    size: 32,
-                  )
+                ? Icon(Icons.person_rounded, color: scheme.primary, size: 32)
                 : null,
           ),
           const SizedBox(width: 13),
@@ -40,8 +37,7 @@ class ProfileHeader extends StatelessWidget {
               children: [
                 Text(
                   profile.name,
-                  style: const TextStyle(
-                    color: Color(0xFF252820),
+                  style: textTheme.titleMedium?.copyWith(
                     fontSize: 17,
                     fontWeight: FontWeight.w700,
                   ),
@@ -49,16 +45,15 @@ class ProfileHeader extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   '${profile.city}, ${profile.country}',
-                  style: const TextStyle(
-                    color: Color(0xFF77796F),
-                    fontSize: 12,
+                  style: textTheme.bodySmall?.copyWith(
+                    color: scheme.onSurfaceVariant,
                   ),
                 ),
                 const SizedBox(height: 8),
                 Text(
                   profile.role.toUpperCase(),
-                  style: TextStyle(
-                    color: AppColors.primaryColor,
+                  style: textTheme.labelSmall?.copyWith(
+                    color: scheme.primary,
                     fontSize: 10,
                     letterSpacing: 1.2,
                     fontWeight: FontWeight.w700,
@@ -69,7 +64,7 @@ class ProfileHeader extends StatelessWidget {
           ),
           IconButton(
             onPressed: onEdit,
-            icon: Icon(Icons.edit_outlined, color: AppColors.primaryColor),
+            icon: Icon(Icons.edit_outlined, color: scheme.primary),
             tooltip: 'Edit profile',
           ),
         ],
@@ -77,3 +72,4 @@ class ProfileHeader extends StatelessWidget {
     );
   }
 }
+

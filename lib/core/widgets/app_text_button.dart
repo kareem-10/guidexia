@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tourist_app/core/theming/styles.dart';
-import 'package:tourist_app/core/utils/app_colors.dart';
 
 class AppTextButton extends StatelessWidget {
   final double? borderRadius;
@@ -28,6 +26,7 @@ class AppTextButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
     return TextButton(
       style: ButtonStyle(
         shape: WidgetStateProperty.all<RoundedRectangleBorder>(
@@ -36,7 +35,7 @@ class AppTextButton extends StatelessWidget {
           ),
         ),
         backgroundColor: WidgetStatePropertyAll(
-          backgroundColor ?? AppColors.primaryColor,
+          backgroundColor ?? scheme.primary,
         ),
         padding: WidgetStateProperty.all<EdgeInsets>(
           EdgeInsets.symmetric(
@@ -51,7 +50,12 @@ class AppTextButton extends StatelessWidget {
       onPressed: onPressed,
       child: Text(
         buttonText,
-        style: textStyle ?? TextStyles.font16WhiteSemiBold,
+        style:
+            textStyle ??
+            Theme.of(context).textTheme.titleSmall?.copyWith(
+              color: scheme.onPrimary,
+              fontWeight: FontWeight.w600,
+            ),
       ),
     );
   }

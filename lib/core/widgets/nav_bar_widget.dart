@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import 'package:tourist_app/core/di/dependancy_injection.dart';
-import 'package:tourist_app/core/utils/app_colors.dart';
 import 'package:tourist_app/features/explore/view/explore_screen.dart';
 import 'package:tourist_app/features/explore/view_model/cubit/explore_cubit.dart';
 import 'package:tourist_app/features/guides/view/screens/guides_screen.dart';
@@ -19,6 +18,7 @@ class NavBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final primary = Theme.of(context).colorScheme.primary;
     return BlocProvider(
       create: (context) => getIt<SavedCubit>()..getSaves(),
       child: PersistentTabView(
@@ -30,8 +30,8 @@ class NavBarWidget extends StatelessWidget {
             ),
             item: ItemConfig(
               icon: Icon(Icons.explore_outlined),
-              activeForegroundColor: AppColors.primaryColor,
-              activeColorSecondary: AppColors.primaryColor,
+              activeForegroundColor: primary,
+              activeColorSecondary: primary,
               title: "Explore",
             ),
           ),
@@ -42,8 +42,8 @@ class NavBarWidget extends StatelessWidget {
             ),
             item: ItemConfig(
               icon: Icon(Icons.group_outlined),
-              activeForegroundColor: AppColors.primaryColor,
-              activeColorSecondary: AppColors.primaryColor,
+              activeForegroundColor: primary,
+              activeColorSecondary: primary,
               title: "Guides",
             ),
           ),
@@ -54,8 +54,8 @@ class NavBarWidget extends StatelessWidget {
             ),
             item: ItemConfig(
               icon: Icon(Icons.hotel_outlined),
-              activeForegroundColor: AppColors.primaryColor,
-              activeColorSecondary: AppColors.primaryColor,
+              activeForegroundColor: primary,
+              activeColorSecondary: primary,
               title: "Stays",
             ),
           ),
@@ -63,8 +63,8 @@ class NavBarWidget extends StatelessWidget {
             screen: SavedScreen(),
             item: ItemConfig(
               icon: Icon(Icons.favorite_border_outlined),
-              activeForegroundColor: AppColors.primaryColor,
-              activeColorSecondary: AppColors.primaryColor,
+              activeForegroundColor: primary,
+              activeColorSecondary: primary,
               title: "Saved",
             ),
           ),
@@ -75,8 +75,8 @@ class NavBarWidget extends StatelessWidget {
             ),
             item: ItemConfig(
               icon: Icon(Icons.person_outlined),
-              activeForegroundColor: AppColors.primaryColor,
-              activeColorSecondary: AppColors.primaryColor,
+              activeForegroundColor: primary,
+              activeColorSecondary: primary,
               title: "Profile",
             ),
           ),

@@ -10,8 +10,8 @@ class ProfileSectionTitle extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 10, top: 22),
       child: Text(
         title.toUpperCase(),
-        style: const TextStyle(
-          color: Color(0xFF77796F),
+        style: Theme.of(context).textTheme.labelSmall?.copyWith(
+          color: Theme.of(context).colorScheme.onSurfaceVariant,
           fontSize: 11,
           fontWeight: FontWeight.w700,
           letterSpacing: 1.4,
