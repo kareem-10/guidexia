@@ -39,6 +39,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
         body: SafeArea(
+          bottom: false,
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 22.w),
             child: Column(
@@ -76,7 +77,10 @@ class _ExploreScreenState extends State<ExploreScreen> {
                           return const Center(child: Text('No places found'));
                         }
 
-                        return PlacesGrid(places: state.places);
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 70),
+                          child: PlacesGrid(places: state.places),
+                        );
                       }
 
                       return const SizedBox();

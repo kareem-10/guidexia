@@ -24,7 +24,14 @@ class _StaysView extends StatelessWidget {
         surfaceTintColor: Colors.transparent,
         elevation: 0,
       ),
-      body: const SafeArea(top: false, child: StaysBody()),
+      body: const SafeArea(
+        top: false,
+        bottom: false,
+        child: Padding(
+          padding: EdgeInsets.only(bottom: 78),
+          child: StaysBody(),
+        ),
+      ),
     );
   }
 }

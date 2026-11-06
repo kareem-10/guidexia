@@ -25,14 +25,17 @@ void showPersonalInfo(BuildContext context, ProfileModel p) {
           _InfoRow(label: 'City', value: p.city),
           _InfoRow(label: 'Country', value: p.country),
           const SizedBox(height: 10),
-          SizedBox(
-            width: double.infinity,
-            child: FilledButton(
-              onPressed: () {
-                Navigator.pop(context);
-                showEditProfile(context, p);
-              },
-              child: const Text('Edit information'),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 60),
+            child: SizedBox(
+              width: double.infinity,
+              child: FilledButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  showEditProfile(context, p);
+                },
+                child: const Text('Edit information'),
+              ),
             ),
           ),
         ],

@@ -113,12 +113,15 @@ class _GuidesViewState extends State<_GuidesView> {
                           ),
                         ),
                         Expanded(
-                          child: ListView.separated(
-                            padding: const EdgeInsets.fromLTRB(18, 0, 18, 20),
-                            itemCount: guides.length,
-                            separatorBuilder: (_, _) => verticalSpace(12),
-                            itemBuilder: (context, index) =>
-                                GuideCard(guide: guides[index]),
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 75),
+                            child: ListView.separated(
+                              padding: const EdgeInsets.fromLTRB(18, 0, 18, 20),
+                              itemCount: guides.length,
+                              separatorBuilder: (_, _) => verticalSpace(12),
+                              itemBuilder: (context, index) =>
+                                  GuideCard(guide: guides[index]),
+                            ),
                           ),
                         ),
                       ],

@@ -9,26 +9,29 @@ void showTrips(BuildContext context, List<TripModel> trips) {
     isScrollControlled: true,
     showDragHandle: true,
     backgroundColor: scheme.surface,
-    builder: (_) => ListSheet(
-      title: 'My Trips',
-      emptyText: 'No trips yet. Your future adventures will appear here.',
-      isEmpty: trips.isEmpty,
-      children: trips
-          .map(
-            (trip) => ListTile(
-              leading: CircleAvatar(
-                backgroundColor: scheme.surfaceContainerHighest,
-                child: Icon(Icons.map_outlined, color: scheme.primary),
+    builder: (_) => Padding(
+      padding: const EdgeInsets.only(bottom: 60),
+      child: ListSheet(
+        title: 'My Trips',
+        emptyText: 'No trips yet. Your future adventures will appear here.',
+        isEmpty: trips.isEmpty,
+        children: trips
+            .map(
+              (trip) => ListTile(
+                leading: CircleAvatar(
+                  backgroundColor: scheme.surfaceContainerHighest,
+                  child: Icon(Icons.map_outlined, color: scheme.primary),
+                ),
+                title: Text(trip.title),
+                subtitle: Text('${trip.location} · ${trip.date}'),
+                trailing: Text(
+                  trip.status,
+                  style: TextStyle(color: scheme.primary, fontSize: 11),
+                ),
               ),
-              title: Text(trip.title),
-              subtitle: Text('${trip.location} · ${trip.date}'),
-              trailing: Text(
-                trip.status,
-                style: TextStyle(color: scheme.primary, fontSize: 11),
-              ),
-            ),
-          )
-          .toList(),
+            )
+            .toList(),
+      ),
     ),
   );
 }

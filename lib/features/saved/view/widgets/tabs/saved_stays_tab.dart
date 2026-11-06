@@ -35,15 +35,18 @@ class SavedStaysTab extends StatelessWidget {
           );
         }
 
-        return ListView.separated(
-          padding: EdgeInsets.all(16.w),
-          separatorBuilder: (_, _) => verticalSpace(14.h),
-          itemCount: state.stays.length,
-          itemBuilder: (context, index) {
-            final stay = state.stays[index];
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 78),
+          child: ListView.separated(
+            padding: EdgeInsets.all(16.w),
+            separatorBuilder: (_, _) => verticalSpace(14.h),
+            itemCount: state.stays.length,
+            itemBuilder: (context, index) {
+              final stay = state.stays[index];
 
-            return StayCard(stay: stay);
-          },
+              return StayCard(stay: stay);
+            },
+          ),
         );
       },
     );

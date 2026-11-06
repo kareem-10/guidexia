@@ -34,14 +34,17 @@ class SavedGuidesTab extends StatelessWidget {
           );
         }
 
-        return ListView.separated(
-          padding: const EdgeInsets.all(16),
-          itemCount: state.guides.length,
-          separatorBuilder: (_, _) => verticalSpace(12),
-          itemBuilder: (context, index) {
-            final guide = state.guides[index];
-            return GuideCard(guide: guide);
-          },
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 75),
+          child: ListView.separated(
+            padding: const EdgeInsets.all(16),
+            itemCount: state.guides.length,
+            separatorBuilder: (_, _) => verticalSpace(12),
+            itemBuilder: (context, index) {
+              final guide = state.guides[index];
+              return GuideCard(guide: guide);
+            },
+          ),
         );
       },
     );

@@ -65,20 +65,23 @@ class SavedPlacesTab extends StatelessWidget {
 
           return RefreshIndicator(
             onRefresh: () => context.read<SavedCubit>().getSaves(),
-            child: GridView.builder(
-              padding: EdgeInsets.all(16.w),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 12.w,
-                mainAxisSpacing: 14.h,
-                childAspectRatio: 0.72,
-              ),
-              itemCount: state.places.length,
-              itemBuilder: (context, index) {
-                final place = state.places[index];
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 75),
+              child: GridView.builder(
+                padding: EdgeInsets.all(16.w),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 12.w,
+                  mainAxisSpacing: 14.h,
+                  childAspectRatio: 0.72,
+                ),
+                itemCount: state.places.length,
+                itemBuilder: (context, index) {
+                  final place = state.places[index];
 
-                return PlaceCard(place: place);
-              },
+                  return PlaceCard(place: place);
+                },
+              ),
             ),
           );
         }
