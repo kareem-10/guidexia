@@ -38,6 +38,7 @@ class _GuidesViewState extends State<_GuidesView> {
         appBar: AppBar(
           elevation: 0,
           scrolledUnderElevation: 0,
+          backgroundColor: Colors.transparent,
           title: AppBarTitle(text: 'Find Guide'),
         ),
         body: Column(

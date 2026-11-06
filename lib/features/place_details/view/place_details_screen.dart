@@ -156,7 +156,7 @@ class PlaceDetailsScreen extends StatelessWidget {
           ),
           SliverToBoxAdapter(
             child: Padding(
-              padding: EdgeInsets.fromLTRB(20.w, 20.h, 20.w, 30.h),
+              padding: EdgeInsets.fromLTRB(20.w, 20.h, 20.w, 80.h),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

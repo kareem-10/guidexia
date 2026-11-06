@@ -10,6 +10,7 @@ class SavedAppBar extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     return AppBar(
       title: const AppBarTitle(text: 'Saved'),
+      backgroundColor: Colors.transparent,
       automaticallyImplyLeading: false,
       bottom: PreferredSize(
         preferredSize: Size.fromHeight(58.h),
