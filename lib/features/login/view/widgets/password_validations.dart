@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tourist_app/core/helpers/spacing.dart';
-import 'package:tourist_app/core/theming/styles.dart';
-import 'package:tourist_app/core/utils/app_colors.dart';
 
 class PasswordValidations extends StatelessWidget {
   final bool hasLowerCase;
@@ -22,37 +20,43 @@ class PasswordValidations extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        buildValidationRow('At least 1 lowercase letter', hasLowerCase),
+        buildValidationRow(context, 'At least 1 lowercase letter', hasLowerCase),
         verticalSpace(2),
-        buildValidationRow('At least 1 uppercase letter', hasUpperCase),
+        buildValidationRow(context, 'At least 1 uppercase letter', hasUpperCase),
         verticalSpace(2),
         buildValidationRow(
+          context,
           'At least 1 special character',
           hasSpecialCharacters,
         ),
         verticalSpace(2),
-        buildValidationRow('At least 1 number', hasNumber),
+        buildValidationRow(context, 'At least 1 number', hasNumber),
         verticalSpace(2),
-        buildValidationRow('At least 8 characters long', hasMinLength),
+        buildValidationRow(context, 'At least 8 characters long', hasMinLength),
       ],
     );
   }
 
-  Widget buildValidationRow(String text, bool hasValidated) {
+  Widget buildValidationRow(BuildContext context, String text, bool hasValidated) {
+    final scheme = Theme.of(context).colorScheme;
+    final success = scheme.brightness == Brightness.dark
+        ? const Color(0xFF81C784)
+        : const Color(0xFF2E7D32);
     return Row(
       children: [
-        CircleAvatar(radius: 2.5, backgroundColor: AppColors.grey),
+        CircleAvatar(radius: 2.5, backgroundColor: scheme.onSurfaceVariant),
         horizontalSpace(6),
         Text(
           text,
-          style: TextStyles.font12PrimaryRegular.copyWith(
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+            color: hasValidated ? scheme.onSurfaceVariant : scheme.primary,
             decoration: hasValidated ? TextDecoration.lineThrough : null,
-            decorationColor: Colors.green,
+            decorationColor: success,
             decorationThickness: 2,
-            color: hasValidated ? AppColors.grey : AppColors.primaryColor,
           ),
         ),
       ],
     );
   }
 }
+

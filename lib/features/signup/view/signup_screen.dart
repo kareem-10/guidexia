@@ -3,8 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tourist_app/core/functions/show_toast.dart';
 import 'package:tourist_app/core/helpers/spacing.dart';
-import 'package:tourist_app/core/theming/styles.dart';
-import 'package:tourist_app/core/utils/app_colors.dart';
 import 'package:tourist_app/core/widgets/app_text_button.dart';
 import 'package:tourist_app/core/widgets/pick_image_widget.dart';
 import 'package:tourist_app/features/signup/view/widgets/signup_form.dart';
@@ -16,6 +14,8 @@ class SignupScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final scheme = Theme.of(context).colorScheme;
     return BlocConsumer<SignupCubit, SignupState>(
       listener: (context, state) {
         if (state is SignupSuccess) {
@@ -37,9 +37,8 @@ class SignupScreen extends StatelessWidget {
                       alignment: Alignment.centerLeft,
                       child: Text(
                         'Create account',
-                        style: TextStyle(
+                        style: textTheme.headlineLarge?.copyWith(
                           fontSize: 24.sp,
-                          color: Colors.black87,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -49,9 +48,9 @@ class SignupScreen extends StatelessWidget {
                       alignment: Alignment.centerLeft,
                       child: Text(
                         'Sign up to continue your journey',
-                        style: TextStyle(
+                        style: textTheme.bodyLarge?.copyWith(
                           fontSize: 16.sp,
-                          color: Colors.black87,
+                          color: scheme.onSurfaceVariant,
                           fontWeight: FontWeight.w400,
                         ),
                       ),
@@ -62,12 +61,9 @@ class SignupScreen extends StatelessWidget {
                     SignupForm(),
                     verticalSpace(40),
                     state is SignupLoading
-                        ? CircularProgressIndicator(
-                            color: AppColors.primaryColor,
-                          )
+                        ? CircularProgressIndicator(color: scheme.primary)
                         : AppTextButton(
                             buttonText: "Create Account",
-                            textStyle: TextStyles.font16WhiteSemiBold,
                             onPressed: () {
                               validateThenDoSignup(context);
                             },
@@ -88,3 +84,4 @@ class SignupScreen extends StatelessWidget {
     }
   }
 }
+

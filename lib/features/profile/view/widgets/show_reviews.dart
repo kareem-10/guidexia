@@ -18,10 +18,7 @@ void showReviews(BuildContext context, List<ReviewModel> reviews) {
             (review) => ListTile(
               leading: CircleAvatar(
                 backgroundColor: scheme.surfaceContainerHighest,
-                child: Icon(
-                  Icons.star_outline_rounded,
-                  color: scheme.primary,
-                ),
+                child: Icon(Icons.star_outline_rounded, color: scheme.primary),
               ),
               title: Text(review.placeName),
               subtitle: Text('${review.comment}\n${review.date}'),
@@ -36,4 +33,3 @@ void showReviews(BuildContext context, List<ReviewModel> reviews) {
     ),
   );
 }
-

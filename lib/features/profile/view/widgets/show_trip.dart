@@ -32,4 +32,3 @@ void showTrips(BuildContext context, List<TripModel> trips) {
     ),
   );
 }
-

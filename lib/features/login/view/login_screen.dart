@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tourist_app/core/helpers/spacing.dart';
-import 'package:tourist_app/core/utils/app_colors.dart';
-import 'package:tourist_app/core/widgets/app_text_button.dart';
 import 'package:tourist_app/core/functions/show_toast.dart';
+import 'package:tourist_app/core/helpers/spacing.dart';
+import 'package:tourist_app/core/widgets/app_text_button.dart';
 import 'package:tourist_app/features/login/view/widgets/dont_have_account_text.dart';
 import 'package:tourist_app/features/login/view/widgets/email_and_password.dart';
 import 'package:tourist_app/features/login/view_model/cubit/login_cubit.dart';
@@ -15,6 +14,8 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final scheme = Theme.of(context).colorScheme;
     return Scaffold(
       body: BlocConsumer<LoginCubit, LoginState>(
         listener: (context, state) {
@@ -35,19 +36,17 @@ class LoginScreen extends StatelessWidget {
                   children: [
                     Text(
                       'Welcome back',
-                      style: TextStyle(
+                      style: textTheme.headlineLarge?.copyWith(
                         fontSize: 24.sp,
-                        color: Colors.black87,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                     verticalSpace(16),
                     Text(
                       'Sign in to continue your journey',
-                      style: TextStyle(
+                      style: textTheme.bodyMedium?.copyWith(
                         fontSize: 14.sp,
-                        color: Colors.black38,
-                        fontWeight: FontWeight.w400,
+                        color: scheme.onSurfaceVariant,
                       ),
                     ),
                     verticalSpace(80),
@@ -56,7 +55,7 @@ class LoginScreen extends StatelessWidget {
                     state is LoginLoading
                         ? Center(
                             child: CircularProgressIndicator(
-                              color: AppColors.primaryColor,
+                              color: scheme.primary,
                             ),
                           )
                         : AppTextButton(
@@ -83,3 +82,4 @@ class LoginScreen extends StatelessWidget {
     }
   }
 }
+

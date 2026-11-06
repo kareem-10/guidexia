@@ -29,4 +29,3 @@ void confirmLogout(BuildContext context) {
     ),
   );
 }
-
