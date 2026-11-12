@@ -15,19 +15,23 @@ class CacheHelper {
   //! this method to put data in local database using key
 
   Future<bool> saveData({required String key, required dynamic value}) async {
-    if (value is bool) {
-      return await sharedPreferences.setBool(key, value);
+    if (value is String) {
+      return sharedPreferences.setString(key, value);
     }
 
-    if (value is String) {
-      return await sharedPreferences.setString(key, value);
+    if (value is bool) {
+      return sharedPreferences.setBool(key, value);
     }
 
     if (value is int) {
-      return await sharedPreferences.setInt(key, value);
-    } else {
-      return await sharedPreferences.setDouble(key, value);
+      return sharedPreferences.setInt(key, value);
     }
+
+    if (value is double) {
+      return sharedPreferences.setDouble(key, value);
+    }
+
+    throw ArgumentError('Unsupported value type: ${value.runtimeType}');
   }
 
   //! this method to get data already saved in local database
@@ -49,6 +53,17 @@ class CacheHelper {
 
   Future<bool> clearAllData() async {
     return sharedPreferences.clear();
+  }
+
+  Future<void> clearOnLogout({
+    List<String> preservedKeys = const ['isDark', 'theme', 'language'],
+  }) async {
+    final Set<String> keys = sharedPreferences.getKeys();
+    for (String key in keys) {
+      if (!preservedKeys.contains(key)) {
+        await sharedPreferences.remove(key);
+      }
+    }
   }
 
   //! this fun to put data in local data base using key

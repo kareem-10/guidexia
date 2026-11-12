@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tourist_app/core/auth/auth_gate.dart';
 import 'package:tourist_app/core/di/dependancy_injection.dart';
 import 'package:tourist_app/core/helpers/cache_helper.dart';
 import 'package:tourist_app/core/routing/app_router.dart';
-import 'package:tourist_app/core/routing/routes.dart';
 import 'package:tourist_app/core/theming/app_theme.dart';
 import 'package:tourist_app/core/theming/theme_cubit/theme_cubit.dart';
 import 'package:tourist_app/core/theming/theme_cubit/theme_state.dart';
@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
             darkTheme: AppTheme.darkTheme,
             themeMode: state.themeMode,
             debugShowCheckedModeBanner: false,
-            initialRoute: Routes.navBar,
+            home: const AuthGate(),
             onGenerateRoute: appRouter.generateRoute,
           ),
         ),
@@ -48,5 +48,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-//nothing

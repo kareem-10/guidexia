@@ -46,12 +46,12 @@ dependencies:
   equatable: ^3.0.0
   image_picker: ^1.2.3
   fluttertoast: ^10.0.2
-  jwt_decoder: ^2.0.1
   dartz: ^0.10.1
   persistent_bottom_nav_bar_v2: ^6.4.0
   flutter_native_splash: ^2.4.8
   connectivity_plus: ^7.3.2
   url_launcher: ^6.3.3
+  flutter_secure_storage: ^11.2.0
 
 dev_dependencies:
   flutter_test:

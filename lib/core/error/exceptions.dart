@@ -10,8 +10,19 @@ class ServerException implements Exception {
 Never handleDioExceptions(DioException e) {
   final responseData = e.response?.data;
 
-  if (responseData is Map<String, dynamic>) {
-    throw ServerException(errModel: ErrorModel.fromJson(responseData));
+  if (responseData is Map) {
+    final json = Map<String, dynamic>.from(responseData);
+
+    throw ServerException(errModel: ErrorModel.fromJson(json));
+  }
+
+  if (responseData is String && responseData.trim().isNotEmpty) {
+    throw ServerException(
+      errModel: ErrorModel(
+        status: e.response?.statusCode ?? 0,
+        errorMessage: responseData,
+      ),
+    );
   }
 
   String message;
@@ -22,11 +33,9 @@ Never handleDioExceptions(DioException e) {
       break;
 
     case DioExceptionType.sendTimeout:
-      message = 'Request timeout. Please try again.';
-      break;
-
     case DioExceptionType.receiveTimeout:
-      message = 'Server took too long to respond.';
+    case DioExceptionType.transformTimeout:
+      message = 'Request timeout. Please try again.';
       break;
 
     case DioExceptionType.connectionError:
@@ -47,9 +56,6 @@ Never handleDioExceptions(DioException e) {
 
     case DioExceptionType.unknown:
       message = 'Something went wrong. Please try again.';
-      break;
-    case DioExceptionType.transformTimeout:
-      message = 'Request timeout. Please try again.';
       break;
   }
 
