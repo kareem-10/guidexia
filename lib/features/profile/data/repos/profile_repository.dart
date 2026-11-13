@@ -1,21 +1,27 @@
+import 'package:tourist_app/core/api/api_consumer.dart';
+import 'package:tourist_app/core/api/end_ponits.dart';
+
 import '../models/profile_model.dart';
 
 class ProfileRepository {
+  final ApiConsumer _apiConsumer;
+
+  ProfileRepository(this._apiConsumer);
+
   Future<ProfileModel> getProfile() async {
-    await Future<void>.delayed(const Duration(milliseconds: 350));
-    return const ProfileModel(
-      name: 'Alex Morgan',
-      email: 'alex.morgan@example.com',
-      phone: '+20 100 123 4567',
-      country: 'Egypt',
-      city: 'Alexandria',
-      role: 'Tourist',
-      imageUrl: null,
-    );
+    final response = await _apiConsumer.get(EndPoints.getUserData);
+
+    final profileJson = response is Map && response['data'] is Map
+        ? Map<String, dynamic>.from(response['data'])
+        : Map<String, dynamic>.from(response);
+
+    return ProfileModel.fromJson(profileJson);
   }
 
+  // Mock data temporarily
   Future<List<TripModel>> getTrips() async {
     await Future<void>.delayed(const Duration(milliseconds: 250));
+
     return const [
       TripModel(
         title: 'A Day in Ancient Cairo',
@@ -38,6 +44,7 @@ class ProfileRepository {
 
   Future<List<ReviewModel>> getReviews() async {
     await Future<void>.delayed(const Duration(milliseconds: 250));
+
     return const [
       ReviewModel(
         placeName: 'Bibliotheca Alexandrina',

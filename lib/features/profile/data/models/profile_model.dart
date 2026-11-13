@@ -17,6 +17,38 @@ class ProfileModel {
     this.imageUrl,
   });
 
+  factory ProfileModel.fromJson(Map<String, dynamic> json) {
+    final touristProfile = Map<String, dynamic>.from(
+      json['touristProfile'] ?? {},
+    );
+
+    final guideProfile = Map<String, dynamic>.from(json['guideProfile'] ?? {});
+
+    final firstName = json['firstName']?.toString() ?? '';
+    final lastName = json['lastName']?.toString() ?? '';
+
+    final fullName = json['fullName']?.toString().trim();
+
+    final name = (fullName != null && fullName.isNotEmpty)
+        ? fullName
+        : '$firstName $lastName'.trim();
+
+    return ProfileModel(
+      name: name,
+      email: json['email']?.toString() ?? '',
+      phone: json['phoneNumber']?.toString() ?? '',
+      country: touristProfile['nationality']?.toString() ?? '',
+      city:
+          touristProfile['displayLocation']?.toString() ??
+          guideProfile['location']?.toString() ??
+          '',
+      role: json['role']?.toString() ?? '',
+      imageUrl:
+          json['profileImageUrl']?.toString() ??
+          guideProfile['profileImageUrl']?.toString(),
+    );
+  }
+
   ProfileModel copyWith({
     String? name,
     String? email,
