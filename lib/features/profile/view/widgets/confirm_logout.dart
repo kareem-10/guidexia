@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tourist_app/core/routing/routes.dart';
+import 'package:tourist_app/features/profile/view_model/cubit/profile_cubit.dart';
 
 void confirmLogout(BuildContext context) {
+  final profileCubit = context.read<ProfileCubit>();
+
   showDialog<void>(
     context: context,
     builder: (dialogContext) => AlertDialog(
       title: const Text('Log out?'),
-      content: const Text(
-        'This is a mock action for now. Connect it to your authentication flow later.',
-      ),
+      content: const Text('Are you sure you want to log out?'),
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(dialogContext),
@@ -17,11 +20,16 @@ void confirmLogout(BuildContext context) {
           ),
         ),
         FilledButton(
-          onPressed: () {
+          onPressed: () async {
             Navigator.pop(dialogContext);
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Connect logout to Auth later')),
-            );
+
+            await profileCubit.logout();
+
+            if (!context.mounted) return;
+
+            Navigator.of(
+              context,
+            ).pushNamedAndRemoveUntil(Routes.loginScreen, (route) => false);
           },
           child: const Text('Log out'),
         ),

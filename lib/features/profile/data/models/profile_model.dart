@@ -2,19 +2,23 @@ class ProfileModel {
   final String name;
   final String email;
   final String phone;
-  final String country;
-  final String city;
+  final String? location;
   final String role;
   final String? imageUrl;
+  final String firstName;
+  final String lastName;
+  final String bio;
 
   const ProfileModel({
     required this.name,
     required this.email,
     required this.phone,
-    required this.country,
-    required this.city,
+    this.location,
     required this.role,
     this.imageUrl,
+    this.firstName = '',
+    this.lastName = '',
+    this.bio = '',
   });
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) {
@@ -35,12 +39,18 @@ class ProfileModel {
 
     return ProfileModel(
       name: name,
+      firstName: json['firstName']?.toString() ?? '',
+      lastName: json['lastName']?.toString() ?? '',
+      bio:
+          json['touristProfile']?['bio']?.toString() ??
+          json['guideProfile']?['bio']?.toString() ??
+          '',
       email: json['email']?.toString() ?? '',
       phone: json['phoneNumber']?.toString() ?? '',
-      country: touristProfile['nationality']?.toString() ?? '',
-      city:
+      location:
           touristProfile['displayLocation']?.toString() ??
           guideProfile['location']?.toString() ??
+          json['location']?.toString() ??
           '',
       role: json['role']?.toString() ?? '',
       imageUrl:
@@ -53,17 +63,21 @@ class ProfileModel {
     String? name,
     String? email,
     String? phone,
-    String? country,
-    String? city,
     String? role,
+    String? location,
     String? imageUrl,
+    String? firstName,
+    String? lastName,
+    String? bio,
   }) {
     return ProfileModel(
       name: name ?? this.name,
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      bio: bio ?? this.bio,
       email: email ?? this.email,
       phone: phone ?? this.phone,
-      country: country ?? this.country,
-      city: city ?? this.city,
+      location: location ?? this.location,
       role: role ?? this.role,
       imageUrl: imageUrl ?? this.imageUrl,
     );

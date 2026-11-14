@@ -18,6 +18,30 @@ class ProfileRepository {
     return ProfileModel.fromJson(profileJson);
   }
 
+  Future<ProfileModel> updateProfile({
+    String? firstName,
+    String? lastName,
+    String? phoneNumber,
+    String? bio,
+    String? location,
+  }) async {
+    final Map<String, dynamic> data = {};
+
+    if (firstName != null) data['firstName'] = firstName;
+    if (lastName != null) data['lastName'] = lastName;
+    if (phoneNumber != null) data['phoneNumber'] = phoneNumber;
+    if (bio != null) data['bio'] = bio;
+    if (location != null) data['location'] = location;
+
+    final response = await _apiConsumer.put(EndPoints.getUserData, data: data);
+
+    final profileJson = response is Map && response['data'] is Map
+        ? Map<String, dynamic>.from(response['data'])
+        : Map<String, dynamic>.from(response);
+
+    return ProfileModel.fromJson(profileJson);
+  }
+
   // Mock data temporarily
   Future<List<TripModel>> getTrips() async {
     await Future<void>.delayed(const Duration(milliseconds: 250));

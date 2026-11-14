@@ -22,8 +22,7 @@ void showPersonalInfo(BuildContext context, ProfileModel p) {
           _InfoRow(label: 'Full name', value: p.name),
           _InfoRow(label: 'Email', value: p.email),
           _InfoRow(label: 'Phone', value: p.phone),
-          _InfoRow(label: 'City', value: p.city),
-          _InfoRow(label: 'Country', value: p.country),
+          _InfoRow(label: 'Location', value: p.location ?? ''),
           const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.only(bottom: 60),

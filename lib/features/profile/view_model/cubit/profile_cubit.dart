@@ -1,12 +1,15 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tourist_app/core/helpers/secure_storage_helper.dart';
 import '../../data/models/profile_model.dart';
 import '../../data/repos/profile_repository.dart';
 import 'profile_state.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
   final ProfileRepository _repository;
+  final SecureStorageHelper _secureStorage;
 
-  ProfileCubit(this._repository) : super(const ProfileState());
+  ProfileCubit(this._repository, this._secureStorage)
+    : super(const ProfileState());
 
   Future<void> loadProfile() async {
     emit(state.copyWith(status: ProfileStatus.loading));
@@ -34,8 +37,40 @@ class ProfileCubit extends Cubit<ProfileState> {
     }
   }
 
-  void updateProfile(ProfileModel profile) {
-    emit(state.copyWith(profile: profile, status: ProfileStatus.success));
+  Future<bool> updateProfile({
+    String? firstName,
+    String? lastName,
+    String? phoneNumber,
+    String? bio,
+    String? location,
+  }) async {
+    try {
+      final updatedProfile = await _repository.updateProfile(
+        firstName: firstName,
+        lastName: lastName,
+        phoneNumber: phoneNumber,
+        bio: bio,
+        location: location,
+      );
+
+      emit(
+        state.copyWith(profile: updatedProfile, status: ProfileStatus.success),
+      );
+
+      return true;
+    } catch (e) {
+      emit(
+        state.copyWith(
+          status: ProfileStatus.failure,
+          errorMessage: 'Could not update profile.',
+        ),
+      );
+      return false;
+    }
+  }
+
+  Future<void> logout() async {
+    await _secureStorage.deleteToken();
   }
 
   void toggleTripNotifications(bool value) =>

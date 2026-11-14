@@ -52,6 +52,7 @@ dependencies:
   connectivity_plus: ^7.3.2
   url_launcher: ^6.3.3
   flutter_secure_storage: ^11.2.0
+  infinite_scroll_pagination: ^5.1.1
 
 dev_dependencies:
   flutter_test:

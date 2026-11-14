@@ -44,7 +44,7 @@ class ProfileHeader extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '${profile.city}, ${profile.country}',
+                  profile.location ?? '',
                   style: textTheme.bodySmall?.copyWith(
                     color: scheme.onSurfaceVariant,
                   ),
@@ -72,4 +72,3 @@ class ProfileHeader extends StatelessWidget {
     );
   }
 }
-

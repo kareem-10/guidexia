@@ -65,7 +65,10 @@ Future<void> setupGetIt({CacheHelper? cacheHelper}) async {
   getIt.registerLazySingleton<ProfileRepository>(
     () => ProfileRepository(getIt()),
   );
-  getIt.registerFactory<ProfileCubit>(() => ProfileCubit(getIt()));
+  getIt.registerFactory<ProfileCubit>(
+    () =>
+        ProfileCubit(getIt<ProfileRepository>(), getIt<SecureStorageHelper>()),
+  );
 
   // Explore
   getIt.registerLazySingleton<ExploreRepo>(() => ExploreRepo());

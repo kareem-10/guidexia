@@ -112,7 +112,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       icon: Icons.logout_rounded,
                       title: 'Logout',
                       destructive: true,
-                      onTap: () => confirmLogout(context),
+                      onTap: () {
+                        confirmLogout(context);
+                      },
                     ),
                   ],
                 ),
