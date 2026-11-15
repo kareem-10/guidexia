@@ -5,6 +5,7 @@ import 'package:tourist_app/core/widgets/favorite_icon_button.dart';
 import 'package:tourist_app/core/widgets/round_button.dart';
 import 'package:tourist_app/features/explore/data/models/place_model.dart';
 import 'package:tourist_app/features/place_details/view/widgets/about_section.dart';
+import 'package:tourist_app/features/place_details/view/widgets/activities_section.dart';
 import 'package:tourist_app/features/place_details/view/widgets/entry_fee_section.dart';
 import 'package:tourist_app/features/place_details/view/widgets/location_section.dart';
 import 'package:tourist_app/features/place_details/view/widgets/rating_section.dart';
@@ -163,6 +164,8 @@ class PlaceDetailsScreen extends StatelessWidget {
                   RatingSection(place: place),
                   SizedBox(height: 22.h),
                   AboutSection(description: place.description),
+                  SizedBox(height: 22.h),
+                  ActivitiesSection(placeId: place.id),
                   SizedBox(height: 22.h),
                   EntryFeeSection(entryFee: place.entryFee),
                   if (place.tags.isNotEmpty) ...[

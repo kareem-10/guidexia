@@ -4,6 +4,7 @@ class EndPoints {
   static String signUp = "Auth/register";
   static const String getUserData = "Profile";
   static const String places = "Places";
+  static String placeActivities(int id) => 'Places/$id/activities';
 }
 
 class ApiKey {

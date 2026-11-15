@@ -13,7 +13,9 @@ class ExploreRepo {
     try {
       final response = await apiConsumer.get(EndPoints.places);
 
-      final places = (response as List)
+      final placesData = response['data'] as List;
+
+      final places = placesData
           .map((place) => PlaceModel.fromJson(Map<String, dynamic>.from(place)))
           .toList();
 

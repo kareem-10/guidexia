@@ -1,9 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tourist_app/core/di/dependancy_injection.dart';
 import 'package:tourist_app/core/widgets/favorite_icon_button.dart';
 import 'package:tourist_app/features/explore/data/models/place_model.dart';
 import 'package:tourist_app/features/place_details/view/place_details_screen.dart';
+import 'package:tourist_app/features/place_details/view_model/cubit/place_details_cubit.dart';
 
 class PlaceCard extends StatelessWidget {
   final PlaceModel place;
@@ -19,7 +22,13 @@ class PlaceCard extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (_) => PlaceDetailsScreen(place: place)),
+          MaterialPageRoute(
+            builder: (_) => BlocProvider(
+              create: (context) =>
+                  getIt<PlaceDetailsCubit>()..getActivities(place.id),
+              child: PlaceDetailsScreen(place: place),
+            ),
+          ),
         );
       },
       child: Container(
