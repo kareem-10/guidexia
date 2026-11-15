@@ -46,8 +46,16 @@ class PlaceModel extends Equatable {
       entryFee: (json['entryFee'] as num?)?.toDouble() ?? 0,
       imageUrl: json['imageUrl']?.toString() ?? '',
       thumbnailUrl: json['thumbnailUrl']?.toString() ?? '',
-      tags: json['tags'] is List
-          ? List<String>.from((json['tags'] as List).map((e) => e.toString()))
+      tags: json['tags'] is String
+          ? json['tags']
+                .split('|')
+                .where((String tag) => tag.trim().isNotEmpty)
+                .toList()
+          : json['tags'] is List
+          ? json['tags']
+                .map((dynamic tag) => tag.toString())
+                .where((String tag) => tag.trim().isNotEmpty)
+                .toList()
           : [],
       averageRating: (json['averageRating'] as num?)?.toDouble() ?? 0,
       reviewCount: (json['reviewCount'] as num?)?.toInt() ?? 0,

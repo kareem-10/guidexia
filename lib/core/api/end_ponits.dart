@@ -3,6 +3,7 @@ class EndPoints {
   static String signIn = "Auth/login";
   static String signUp = "Auth/register";
   static const String getUserData = "Profile";
+  static const String places = "Places";
 }
 
 class ApiKey {

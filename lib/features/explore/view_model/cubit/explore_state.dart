@@ -19,11 +19,16 @@ class ExploreLoading extends ExploreState {
 class ExploreSuccess extends ExploreState {
   final List<PlaceModel> places;
   final String selectedCategory;
+  final String searchQuery;
 
-  const ExploreSuccess({required this.places, required this.selectedCategory});
+  const ExploreSuccess({
+    required this.places,
+    required this.selectedCategory,
+    required this.searchQuery,
+  });
 
   @override
-  List<Object?> get props => [places, selectedCategory];
+  List<Object?> get props => [places, selectedCategory, searchQuery];
 }
 
 class ExploreFailure extends ExploreState {
