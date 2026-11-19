@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tourist_app/core/helpers/spacing.dart';
+import 'package:tourist_app/core/widgets/search_bar_widget.dart';
 import 'package:tourist_app/features/explore/view/widgets/category_list.dart';
 import 'package:tourist_app/features/explore/view/widgets/explore_header.dart';
-import 'package:tourist_app/core/widgets/search_bar_widget.dart';
 import 'package:tourist_app/features/explore/view/widgets/explore_shimmer.dart';
 import 'package:tourist_app/features/explore/view/widgets/places_grid.dart';
 import 'package:tourist_app/features/explore/view_model/cubit/explore_cubit.dart';
@@ -23,7 +23,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
   @override
   void initState() {
     super.initState();
-
     context.read<ExploreCubit>().getPlaces();
   }
 
@@ -46,7 +45,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const ExploreHeader(),
-
                 verticalSpace(16),
                 SearchBarWidget(
                   controller: searchController,
@@ -55,11 +53,8 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     context.read<ExploreCubit>().searchPlaces(value);
                   },
                 ),
-
                 verticalSpace(16),
-
                 const CategoryList(),
-
                 verticalSpace(20),
                 Expanded(
                   child: BlocBuilder<ExploreCubit, ExploreState>(
@@ -69,17 +64,32 @@ class _ExploreScreenState extends State<ExploreScreen> {
                       }
 
                       if (state is ExploreFailure) {
-                        return Center(child: Text(state.message));
+                        return Center(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(state.message),
+                              verticalSpace(12),
+                              ElevatedButton(
+                                onPressed: () {
+                                  context.read<ExploreCubit>().getPlaces();
+                                },
+                                child: const Text('Retry'),
+                              ),
+                            ],
+                          ),
+                        );
                       }
 
                       if (state is ExploreSuccess) {
-                        if (state.places.isEmpty) {
-                          return const Center(child: Text('No places found'));
-                        }
-
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 70),
-                          child: PlacesGrid(places: state.places),
+                          child: PlacesGrid(
+                            pagingState: state.pagingState,
+                            fetchNextPage: context
+                                .read<ExploreCubit>()
+                                .fetchNextPage,
+                          ),
                         );
                       }
 

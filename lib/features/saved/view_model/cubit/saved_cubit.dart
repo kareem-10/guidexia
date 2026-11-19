@@ -35,7 +35,7 @@ class SavedCubit extends Cubit<SavedState> {
     try {
       final results = await Future.wait([
         savedRepository.getSaves(),
-        exploreRepo.getPlaces(),
+        // exploreRepo.getPlaces(),
         guidesRepo.getGuides(),
         stayRepository.getStays(),
       ]);

@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:tourist_app/features/explore/data/models/place_model.dart';
 
 abstract class ExploreState extends Equatable {
@@ -17,18 +18,21 @@ class ExploreLoading extends ExploreState {
 }
 
 class ExploreSuccess extends ExploreState {
-  final List<PlaceModel> places;
+  final PagingState<int, PlaceModel> pagingState;
   final String selectedCategory;
   final String searchQuery;
 
   const ExploreSuccess({
-    required this.places,
+    required this.pagingState,
     required this.selectedCategory,
     required this.searchQuery,
   });
 
+  List<PlaceModel> get places =>
+      pagingState.pages?.expand((page) => page).toList() ?? [];
+
   @override
-  List<Object?> get props => [places, selectedCategory, searchQuery];
+  List<Object?> get props => [pagingState, selectedCategory, searchQuery];
 }
 
 class ExploreFailure extends ExploreState {
