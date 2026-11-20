@@ -5,6 +5,7 @@ class ProfileModel {
   final String? location;
   final String role;
   final String? imageUrl;
+  final String? localImagePath;
   final String firstName;
   final String lastName;
   final String bio;
@@ -16,6 +17,7 @@ class ProfileModel {
     this.location,
     required this.role,
     this.imageUrl,
+    this.localImagePath,
     this.firstName = '',
     this.lastName = '',
     this.bio = '',
@@ -69,6 +71,7 @@ class ProfileModel {
     String? firstName,
     String? lastName,
     String? bio,
+    String? localImagePath,
   }) {
     return ProfileModel(
       name: name ?? this.name,
@@ -80,6 +83,7 @@ class ProfileModel {
       location: location ?? this.location,
       role: role ?? this.role,
       imageUrl: imageUrl ?? this.imageUrl,
+      localImagePath: localImagePath ?? this.localImagePath,
     );
   }
 }

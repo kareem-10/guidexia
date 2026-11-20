@@ -44,7 +44,7 @@ dependencies:
   cached_network_image: ^4.0.3
   shimmer: ^4.0.0
   equatable: ^3.0.0
-  image_picker: ^1.2.3
+  image_picker: ^1.2.4
   fluttertoast: ^10.0.2
   dartz: ^0.10.1
   persistent_bottom_nav_bar_v2: ^6.4.0
@@ -53,6 +53,7 @@ dependencies:
   url_launcher: ^6.3.3
   flutter_secure_storage: ^11.2.0
   infinite_scroll_pagination: ^5.1.1
+  path_provider: ^2.1.6
 
 dev_dependencies:
   flutter_test:

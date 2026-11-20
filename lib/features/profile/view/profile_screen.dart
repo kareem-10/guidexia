@@ -67,6 +67,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ProfileHeader(
                 profile: profile,
                 onEdit: () => showEditProfile(context, profile),
+                onChangePhoto: () {
+                  context.read<ProfileCubit>().pickProfileImage();
+                },
               ),
               const ProfileSectionTitle(title: 'Your account'),
               Container(
