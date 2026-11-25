@@ -1,5 +1,4 @@
-import 'dart:io';
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import '../../data/models/profile_model.dart';
 
@@ -35,22 +34,17 @@ class ProfileHeader extends StatelessWidget {
                 CircleAvatar(
                   radius: 31,
                   backgroundColor: scheme.surfaceContainerHighest,
-                  backgroundImage: profile.localImagePath != null
-                      ? FileImage(File(profile.localImagePath!))
-                      : (profile.imageUrl != null &&
-                            profile.imageUrl!.isNotEmpty)
-                      ? NetworkImage(profile.imageUrl!)
+                  backgroundImage:
+                      profile.imageUrl != null && profile.imageUrl!.isNotEmpty
+                      ? CachedNetworkImageProvider(profile.imageUrl!)
                       : null,
-                  child:
-                      profile.localImagePath == null &&
-                          (profile.imageUrl == null ||
-                              profile.imageUrl!.isEmpty)
-                      ? Icon(
+                  child: (profile.imageUrl?.isNotEmpty ?? false)
+                      ? null
+                      : Icon(
                           Icons.person_rounded,
                           color: scheme.primary,
                           size: 32,
-                        )
-                      : null,
+                        ),
                 ),
                 Positioned(
                   bottom: 0,

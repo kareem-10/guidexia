@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:tourist_app/core/api/api_consumer.dart';
 import 'package:tourist_app/core/api/end_ponits.dart';
 
@@ -54,5 +55,18 @@ class ProfileRepository {
         : response['data'] ?? [];
 
     return tripsJson.map((trip) => TripModel.fromJson(trip)).toList();
+  }
+
+  Future<ProfileModel> updateProfileImage(String imagePath) async {
+    final response = await _apiConsumer.put(
+      EndPoints.getUserData,
+      data: {'ProfileImage': await MultipartFile.fromFile(imagePath)},
+      isFromData: true,
+    );
+    final profileJson = response is Map && response['data'] is Map
+        ? Map<String, dynamic>.from(response['data'])
+        : Map<String, dynamic>.from(response);
+
+    return ProfileModel.fromJson(profileJson);
   }
 }

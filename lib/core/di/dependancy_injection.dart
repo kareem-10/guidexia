@@ -70,11 +70,8 @@ Future<void> setupGetIt({CacheHelper? cacheHelper}) async {
     () => ProfileRepository(getIt()),
   );
   getIt.registerFactory<ProfileCubit>(
-    () => ProfileCubit(
-      getIt<ProfileRepository>(),
-      getIt<SecureStorageHelper>(),
-      getIt<CacheHelper>(),
-    ),
+    () =>
+        ProfileCubit(getIt<ProfileRepository>(), getIt<SecureStorageHelper>()),
   );
 
   // Explore
