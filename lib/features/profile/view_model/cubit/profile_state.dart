@@ -5,8 +5,9 @@ enum ProfileStatus { initial, loading, success, failure }
 class ProfileState {
   final ProfileStatus status;
   final ProfileModel? profile;
-  final List<TripModel> trips;
-  final List<ReviewModel> reviews;
+  final List<TripModel> upcomingTrips;
+  final List<TripModel> pastTrips;
+  final List<MyReviewModel> reviews;
   final bool tripNotifications;
   final bool reviewNotifications;
   final bool appNotifications;
@@ -15,7 +16,8 @@ class ProfileState {
   const ProfileState({
     this.status = ProfileStatus.initial,
     this.profile,
-    this.trips = const [],
+    this.upcomingTrips = const [],
+    this.pastTrips = const [],
     this.reviews = const [],
     this.tripNotifications = true,
     this.reviewNotifications = true,
@@ -26,8 +28,9 @@ class ProfileState {
   ProfileState copyWith({
     ProfileStatus? status,
     ProfileModel? profile,
-    List<TripModel>? trips,
-    List<ReviewModel>? reviews,
+    List<TripModel>? upcomingTrips,
+    List<TripModel>? pastTrips,
+    List<MyReviewModel>? reviews,
     bool? tripNotifications,
     bool? reviewNotifications,
     bool? appNotifications,
@@ -36,7 +39,8 @@ class ProfileState {
     return ProfileState(
       status: status ?? this.status,
       profile: profile ?? this.profile,
-      trips: trips ?? this.trips,
+      upcomingTrips: upcomingTrips ?? this.upcomingTrips,
+      pastTrips: pastTrips ?? this.pastTrips,
       reviews: reviews ?? this.reviews,
       tripNotifications: tripNotifications ?? this.tripNotifications,
       reviewNotifications: reviewNotifications ?? this.reviewNotifications,

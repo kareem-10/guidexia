@@ -5,6 +5,10 @@ class EndPoints {
   static const String getUserData = "Profile";
   static const String places = "Places";
   static String placeActivities(int id) => 'Places/$id/activities';
+  static const String trips = "Trips";
+
+  static const String reviews = 'Reviews';
+  static String reviewById(int id) => 'Reviews/$id';
 }
 
 class ApiKey {

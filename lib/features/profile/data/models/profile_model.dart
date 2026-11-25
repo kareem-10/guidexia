@@ -89,29 +89,55 @@ class ProfileModel {
 }
 
 class TripModel {
+  final int id;
   final String title;
   final String location;
   final String date;
+  final String endDate;
   final String status;
+  final int travelerCount;
   final String imageUrl;
+  final String estimatedBudgetPerPerson;
+  final bool isAiGenerated;
 
   const TripModel({
+    required this.id,
     required this.title,
     required this.location,
     required this.date,
+    required this.endDate,
     required this.status,
+    required this.travelerCount,
     required this.imageUrl,
+    required this.estimatedBudgetPerPerson,
+    required this.isAiGenerated,
   });
+
+  factory TripModel.fromJson(Map<String, dynamic> json) {
+    return TripModel(
+      id: json['id'] ?? 0,
+      title: json['name'] ?? '',
+      location: json['destination'] ?? '',
+      date: json['startDate'] ?? '',
+      endDate: json['endDate'] ?? '',
+      status: json['status'] ?? '',
+      travelerCount: json['travelerCount'] ?? 0,
+      imageUrl: json['coverImageUrl'] ?? '',
+      estimatedBudgetPerPerson:
+          json['estimatedBudgetPerPerson']?.toString() ?? '',
+      isAiGenerated: json['isAiGenerated'] ?? false,
+    );
+  }
 }
 
-class ReviewModel {
+class MyReviewModel {
   final String placeName;
   final String comment;
   final double rating;
   final String date;
   final String imageUrl;
 
-  const ReviewModel({
+  const MyReviewModel({
     required this.placeName,
     required this.comment,
     required this.rating,

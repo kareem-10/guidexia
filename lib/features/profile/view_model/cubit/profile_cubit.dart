@@ -9,7 +9,7 @@ import '../../data/repos/profile_repository.dart';
 import 'profile_state.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
-  final ProfileRepository _repository;
+  final ProfileRepository _profileRepository;
   final SecureStorageHelper _secureStorage;
   final CacheHelper _cacheHelper;
 
@@ -17,42 +17,43 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   static const String _profileImageKey = 'profile_local_image';
 
-  ProfileCubit(this._repository, this._secureStorage, this._cacheHelper)
+  ProfileCubit(this._profileRepository, this._secureStorage, this._cacheHelper)
     : super(const ProfileState());
 
   Future<void> loadProfile() async {
     emit(state.copyWith(status: ProfileStatus.loading));
+
     try {
       final results = await Future.wait([
-        _repository.getProfile(),
-        _repository.getTrips(),
-        _repository.getReviews(),
+        _profileRepository.getProfile(),
+        _profileRepository.getTrips(upcoming: true),
+        _profileRepository.getTrips(upcoming: false),
+        _profileRepository.getReviews(),
       ]);
 
-      ProfileModel profile = results[0] as ProfileModel;
+      final profile = results[0] as ProfileModel;
+      final upcomingTrips = results[1] as List<TripModel>;
+      final pastTrips = results[2] as List<TripModel>;
+      final reviews = results[3] as List<MyReviewModel>;
 
-      // Restore locally saved profile image.
-      final savedImagePath = _cacheHelper.getDataString(key: _profileImageKey);
-
-      if (savedImagePath != null && await File(savedImagePath).exists()) {
-        profile = profile.copyWith(localImagePath: savedImagePath);
-      } else {
-        await _cacheHelper.removeData(key: _profileImageKey);
-      }
+      final localImagePath = _cacheHelper.getDataString(
+        key: 'profile_local_image',
+      );
 
       emit(
         state.copyWith(
           status: ProfileStatus.success,
-          profile: profile,
-          trips: results[1] as List<TripModel>,
-          reviews: results[2] as List<ReviewModel>,
+          profile: profile.copyWith(localImagePath: localImagePath),
+          upcomingTrips: upcomingTrips,
+          pastTrips: pastTrips,
+          reviews: reviews,
         ),
       );
     } catch (e) {
       emit(
         state.copyWith(
           status: ProfileStatus.failure,
-          errorMessage: 'Could not load profile data.',
+          errorMessage: e.toString(),
         ),
       );
     }
@@ -106,7 +107,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     String? location,
   }) async {
     try {
-      final updatedProfile = await _repository.updateProfile(
+      final updatedProfile = await _profileRepository.updateProfile(
         firstName: firstName,
         lastName: lastName,
         phoneNumber: phoneNumber,

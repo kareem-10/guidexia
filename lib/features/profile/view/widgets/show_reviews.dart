@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tourist_app/features/profile/data/models/profile_model.dart';
 import 'package:tourist_app/features/profile/view/widgets/list_sheet.dart';
 
-void showReviews(BuildContext context, List<ReviewModel> reviews) {
+void showReviews(BuildContext context, List<MyReviewModel> reviews) {
   final scheme = Theme.of(context).colorScheme;
   showModalBottomSheet(
     context: context,

@@ -90,7 +90,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ProfileMenuItem(
                       icon: Icons.map_outlined,
                       title: 'My Trips',
-                      onTap: () => showTrips(context, state.trips),
+                      onTap: () => showTrips(
+                        context,
+                        upcomingTrips: state.upcomingTrips,
+                        pastTrips: state.pastTrips,
+                      ),
                     ),
                     const _MenuDivider(),
                     ProfileMenuItem(

@@ -15,6 +15,8 @@ import 'package:tourist_app/features/place_details/data/repos/place_details_repo
 import 'package:tourist_app/features/place_details/view_model/cubit/place_details_cubit.dart';
 import 'package:tourist_app/features/profile/data/repos/profile_repository.dart';
 import 'package:tourist_app/features/profile/view_model/cubit/profile_cubit.dart';
+import 'package:tourist_app/features/reviews/data/repos/reviews_repo.dart';
+import 'package:tourist_app/features/reviews/view_model/cubit/reviews_cubit.dart';
 import 'package:tourist_app/features/saved/data/repos/saved_repo.dart';
 import 'package:tourist_app/features/saved/view_model/cubit/saved_cubit.dart';
 import 'package:tourist_app/features/auth/data/repos/signup_repo.dart';
@@ -106,4 +108,9 @@ Future<void> setupGetIt({CacheHelper? cacheHelper}) async {
       getIt<StayRepository>(),
     ),
   );
+
+  //reviews
+  getIt.registerLazySingleton<ReviewsRepo>(() => ReviewsRepo(getIt()));
+
+  getIt.registerFactory<ReviewsCubit>(() => ReviewsCubit(getIt()));
 }

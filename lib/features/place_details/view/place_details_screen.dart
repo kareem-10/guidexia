@@ -10,6 +10,7 @@ import 'package:tourist_app/features/place_details/view/widgets/entry_fee_sectio
 import 'package:tourist_app/features/place_details/view/widgets/location_section.dart';
 import 'package:tourist_app/features/place_details/view/widgets/rating_section.dart';
 import 'package:tourist_app/features/place_details/view/widgets/tags_section.dart';
+import 'package:tourist_app/features/reviews/view/reviews_section.dart';
 
 class PlaceDetailsScreen extends StatelessWidget {
   final PlaceModel place;
@@ -174,6 +175,9 @@ class PlaceDetailsScreen extends StatelessWidget {
                   ],
                   SizedBox(height: 22.h),
                   LocationSection(place: place),
+                  SizedBox(height: 22.h),
+                  SizedBox(height: 22.h),
+                  ReviewsSection(placeId: place.id),
                 ],
               ),
             ),

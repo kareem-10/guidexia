@@ -43,34 +43,24 @@ class ProfileRepository {
   }
 
   // Mock data temporarily
-  Future<List<TripModel>> getTrips() async {
-    await Future<void>.delayed(const Duration(milliseconds: 250));
+  Future<List<TripModel>> getTrips({required bool upcoming}) async {
+    final response = await _apiConsumer.get(
+      EndPoints.trips,
+      queryParameters: {'upcoming': upcoming},
+    );
 
-    return const [
-      TripModel(
-        title: 'A Day in Ancient Cairo',
-        location: 'Cairo, Egypt',
-        date: 'Oct 28, 2026',
-        status: 'Upcoming',
-        imageUrl:
-            'https://images.unsplash.com/photo-1572252009286-268acec5ca0a?w=900',
-      ),
-      TripModel(
-        title: 'Alexandria Seaside',
-        location: 'Alexandria, Egypt',
-        date: 'Sep 12, 2026',
-        status: 'Completed',
-        imageUrl:
-            'https://images.unsplash.com/photo-1568322445389-f64ac2515020?w=900',
-      ),
-    ];
+    final List<dynamic> tripsJson = response is List
+        ? response
+        : response['data'] ?? [];
+
+    return tripsJson.map((trip) => TripModel.fromJson(trip)).toList();
   }
 
-  Future<List<ReviewModel>> getReviews() async {
+  Future<List<MyReviewModel>> getReviews() async {
     await Future<void>.delayed(const Duration(milliseconds: 250));
 
     return const [
-      ReviewModel(
+      MyReviewModel(
         placeName: 'Bibliotheca Alexandrina',
         comment: 'A beautiful place with so much history.',
         rating: 5,
@@ -78,7 +68,7 @@ class ProfileRepository {
         imageUrl:
             'https://images.unsplash.com/photo-1568322445389-f64ac2515020?w=900',
       ),
-      ReviewModel(
+      MyReviewModel(
         placeName: 'Citadel of Qaitbay',
         comment: 'Amazing sea views and a great experience.',
         rating: 4.5,

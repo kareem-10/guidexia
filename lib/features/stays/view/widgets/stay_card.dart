@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tourist_app/core/functions/show_toast.dart';
 import 'package:tourist_app/core/widgets/favorite_icon_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -19,9 +20,7 @@ class StayCard extends StatelessWidget {
         !uri.hasScheme ||
         (uri.scheme != 'https' && uri.scheme != 'http') ||
         uri.host.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Booking website is not available.')),
-      );
+      showToast('Booking website is not available.');
       return;
     }
 
@@ -29,15 +28,11 @@ class StayCard extends StatelessWidget {
       final opened = await launchUrl(uri, mode: LaunchMode.externalApplication);
 
       if (!opened && context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Could not open the booking website.')),
-        );
+        showToast('Could not open the booking website.');
       }
     } catch (_) {
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Could not open the booking website.')),
-        );
+        showToast('Could not open the booking website.');
       }
     }
   }
