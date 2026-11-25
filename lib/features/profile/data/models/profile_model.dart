@@ -129,19 +129,3 @@ class TripModel {
     );
   }
 }
-
-class MyReviewModel {
-  final String placeName;
-  final String comment;
-  final double rating;
-  final String date;
-  final String imageUrl;
-
-  const MyReviewModel({
-    required this.placeName,
-    required this.comment,
-    required this.rating,
-    required this.date,
-    required this.imageUrl,
-  });
-}

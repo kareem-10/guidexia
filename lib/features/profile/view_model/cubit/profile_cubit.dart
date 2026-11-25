@@ -28,13 +28,11 @@ class ProfileCubit extends Cubit<ProfileState> {
         _profileRepository.getProfile(),
         _profileRepository.getTrips(upcoming: true),
         _profileRepository.getTrips(upcoming: false),
-        _profileRepository.getReviews(),
       ]);
 
       final profile = results[0] as ProfileModel;
       final upcomingTrips = results[1] as List<TripModel>;
       final pastTrips = results[2] as List<TripModel>;
-      final reviews = results[3] as List<MyReviewModel>;
 
       final localImagePath = _cacheHelper.getDataString(
         key: 'profile_local_image',
@@ -46,7 +44,6 @@ class ProfileCubit extends Cubit<ProfileState> {
           profile: profile.copyWith(localImagePath: localImagePath),
           upcomingTrips: upcomingTrips,
           pastTrips: pastTrips,
-          reviews: reviews,
         ),
       );
     } catch (e) {

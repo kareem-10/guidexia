@@ -79,23 +79,11 @@ class SignupScreen extends StatelessWidget {
                   verticalSpace(28),
 
                   AppTextButton(
-                    buttonText: 'Create Account',
+                    buttonText: isLoading ? 'Creating...' : 'Create Account',
                     onPressed: isLoading
                         ? null
                         : () => validateThenDoSignup(context),
                   ),
-
-                  if (isLoading) ...[
-                    verticalSpace(12),
-                    Center(
-                      child: Text(
-                        'Creating your account...',
-                        style: textTheme.bodySmall?.copyWith(
-                          color: scheme.onSurfaceVariant,
-                        ),
-                      ),
-                    ),
-                  ],
 
                   verticalSpace(24),
 

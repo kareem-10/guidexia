@@ -55,27 +55,4 @@ class ProfileRepository {
 
     return tripsJson.map((trip) => TripModel.fromJson(trip)).toList();
   }
-
-  Future<List<MyReviewModel>> getReviews() async {
-    await Future<void>.delayed(const Duration(milliseconds: 250));
-
-    return const [
-      MyReviewModel(
-        placeName: 'Bibliotheca Alexandrina',
-        comment: 'A beautiful place with so much history.',
-        rating: 5,
-        date: 'Oct 10, 2026',
-        imageUrl:
-            'https://images.unsplash.com/photo-1568322445389-f64ac2515020?w=900',
-      ),
-      MyReviewModel(
-        placeName: 'Citadel of Qaitbay',
-        comment: 'Amazing sea views and a great experience.',
-        rating: 4.5,
-        date: 'Sep 18, 2026',
-        imageUrl:
-            'https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?w=900',
-      ),
-    ];
-  }
 }

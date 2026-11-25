@@ -78,23 +78,11 @@ class LoginScreen extends StatelessWidget {
                   verticalSpace(32),
 
                   AppTextButton(
-                    buttonText: 'Login',
+                    buttonText: isLoading ? 'Signing in...' : 'Login',
                     onPressed: isLoading
                         ? null
                         : () => validateThenDoLogin(context),
                   ),
-
-                  if (isLoading) ...[
-                    verticalSpace(12),
-                    Center(
-                      child: Text(
-                        'Signing in...',
-                        style: textTheme.bodySmall?.copyWith(
-                          color: scheme.onSurfaceVariant,
-                        ),
-                      ),
-                    ),
-                  ],
 
                   verticalSpace(24),
 

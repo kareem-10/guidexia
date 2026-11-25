@@ -5,7 +5,6 @@ import 'package:tourist_app/features/profile/view/widgets/confirm_logout.dart';
 import 'package:tourist_app/features/profile/view/widgets/show_edit_profile.dart';
 import 'package:tourist_app/features/profile/view/widgets/show_notifications.dart';
 import 'package:tourist_app/features/profile/view/widgets/show_personal_info.dart';
-import 'package:tourist_app/features/profile/view/widgets/show_reviews.dart';
 import 'package:tourist_app/features/profile/view/widgets/show_settings.dart';
 import 'package:tourist_app/features/profile/view/widgets/show_trip.dart';
 import '../view_model/cubit/profile_cubit.dart';
@@ -95,12 +94,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         upcomingTrips: state.upcomingTrips,
                         pastTrips: state.pastTrips,
                       ),
-                    ),
-                    const _MenuDivider(),
-                    ProfileMenuItem(
-                      icon: Icons.star_border_rounded,
-                      title: 'My Reviews',
-                      onTap: () => showReviews(context, state.reviews),
                     ),
                     const _MenuDivider(),
                     ProfileMenuItem(
