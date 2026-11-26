@@ -29,6 +29,7 @@ void confirmLogout(BuildContext context) {
 
             Navigator.of(
               context,
+              rootNavigator: true,
             ).pushNamedAndRemoveUntil(Routes.loginScreen, (route) => false);
           },
           child: const Text('Log out'),
