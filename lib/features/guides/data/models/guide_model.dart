@@ -1,8 +1,9 @@
 class GuideModel {
   final int id;
   final String userId;
-  final String name; // Temporary field: ask backend to add it.
-  final String bio; // Temporary field: ask backend to add it.
+  final String firstName;
+  final String lastName;
+  final String bio;
   final String location;
   final String languages;
   final String specialties;
@@ -18,7 +19,8 @@ class GuideModel {
   const GuideModel({
     required this.id,
     required this.userId,
-    required this.name,
+    required this.firstName,
+    required this.lastName,
     required this.bio,
     required this.location,
     required this.languages,
@@ -33,15 +35,22 @@ class GuideModel {
     this.coverImageUrl,
   });
 
+  String get fullName => '$firstName $lastName'.trim().isEmpty
+      ? 'Guide #$id'
+      : '$firstName $lastName'.trim();
+
   factory GuideModel.fromJson(Map<String, dynamic> json) {
     double asDouble(dynamic value) =>
         value is num ? value.toDouble() : double.tryParse('$value') ?? 0;
+
     int asInt(dynamic value) =>
         value is num ? value.toInt() : int.tryParse('$value') ?? 0;
+
     return GuideModel(
       id: asInt(json['id']),
       userId: json['userId']?.toString() ?? '',
-      name: json['name']?.toString() ?? 'Guide #${json['id'] ?? ''}',
+      firstName: json['firstName']?.toString() ?? '',
+      lastName: json['lastName']?.toString() ?? '',
       bio: json['bio']?.toString() ?? '',
       location: json['location']?.toString() ?? '',
       languages: json['languages']?.toString() ?? '',

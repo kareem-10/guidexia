@@ -4,6 +4,8 @@ class EndPoints {
   static String signUp = "Auth/register";
   static const String getUserData = "Profile";
   static const String places = "Places";
+  static const String guides = 'Guides';
+  static String guideById(int id) => 'Guides/$id';
   static String placeActivities(int id) => 'Places/$id/activities';
   static const String trips = "Trips";
 
