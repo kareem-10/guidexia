@@ -23,13 +23,14 @@ class ReviewsState extends Equatable {
     List<ReviewModel>? reviews,
     bool? isSubmitting,
     String? errorMessage,
+    bool clearError = false,
     bool? isDeleting,
   }) {
     return ReviewsState(
       status: status ?? this.status,
       reviews: reviews ?? this.reviews,
       isSubmitting: isSubmitting ?? this.isSubmitting,
-      errorMessage: errorMessage,
+      errorMessage: clearError ? null : errorMessage ?? this.errorMessage,
       isDeleting: isDeleting ?? this.isDeleting,
     );
   }

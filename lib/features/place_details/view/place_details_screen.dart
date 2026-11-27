@@ -177,7 +177,7 @@ class PlaceDetailsScreen extends StatelessWidget {
                   LocationSection(place: place),
                   SizedBox(height: 22.h),
                   SizedBox(height: 22.h),
-                  ReviewsSection(placeId: place.id),
+                  ReviewsSection(referenceType: 'Place', referenceId: place.id),
                 ],
               ),
             ),

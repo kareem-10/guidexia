@@ -7,8 +7,13 @@ import 'package:tourist_app/features/reviews/view_model/cubit/reviews_cubit.dart
 import 'package:tourist_app/features/reviews/view_model/cubit/reviews_state.dart';
 
 class ReviewsView extends StatelessWidget {
-  final int placeId;
-  const ReviewsView({super.key, required this.placeId});
+  final String referenceType;
+  final int referenceId;
+  const ReviewsView({
+    super.key,
+    required this.referenceType,
+    required this.referenceId,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +37,8 @@ class ReviewsView extends StatelessWidget {
                       : () => showAddReviewDialog(
                           context,
                           cubit,
-                          placeId: placeId,
+                          referenceType: referenceType,
+                          referenceId: referenceId,
                         ),
                   icon: const Icon(Icons.edit_outlined),
                   label: const Text('Write a Review'),
@@ -55,8 +61,8 @@ class ReviewsView extends StatelessWidget {
                     TextButton(
                       onPressed: () {
                         cubit.loadReviews(
-                          referenceType: 'Place',
-                          referenceId: placeId,
+                          referenceType: referenceType,
+                          referenceId: referenceId,
                         );
                       },
                       child: const Text('Try Again'),
@@ -91,43 +97,56 @@ class ReviewsView extends StatelessWidget {
                             ),
                             horizontalSpace(10),
                             Expanded(
-                              child: Text(
-                                review.reviewerName.isNotEmpty
-                                    ? review.reviewerName
-                                    : 'Anonymous',
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
+                              child: Row(
+                                children: [
+                                  Flexible(
+                                    child: Text(
+                                      review.reviewerName.isNotEmpty
+                                          ? review.reviewerName
+                                          : 'Anonymous',
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 6),
+                                  const Icon(
+                                    Icons.star,
+                                    color: Colors.amber,
+                                    size: 16,
+                                  ),
+                                  const SizedBox(width: 3),
+                                  Text(
+                                    '(${review.rating.toStringAsFixed(1)})',
+                                    style: Theme.of(
+                                      context,
+                                    ).textTheme.bodySmall,
+                                  ),
+                                ],
                               ),
                             ),
-                            const Icon(
-                              Icons.star,
-                              color: Colors.amber,
-                              size: 18,
-                            ),
-                            Column(
-                              children: [
-                                Text(review.rating.toStringAsFixed(1)),
-                                verticalSpace(15),
-                                IconButton(
-                                  onPressed: state.isDeleting
-                                      ? null
-                                      : () => confirmDeleteReview(
-                                          context,
-                                          cubit,
-                                          placeId,
-                                          review.id,
-                                        ),
-                                  icon: const Icon(
-                                    Icons.delete_outline,
-                                    color: Colors.red,
-                                  ),
-                                  tooltip: 'Delete review',
-                                ),
-                              ],
+                            IconButton(
+                              onPressed: state.isDeleting
+                                  ? null
+                                  : () => confirmDeleteReview(
+                                      context,
+                                      cubit,
+                                      referenceType: referenceType,
+                                      referenceId: referenceId,
+                                      reviewId: review.id,
+                                    ),
+                              icon: const Icon(
+                                Icons.delete_outline,
+                                color: Colors.red,
+                              ),
+                              tooltip: 'Delete review',
+                              visualDensity: VisualDensity.compact,
                             ),
                           ],
                         ),
+
                         verticalSpace(10),
                         Text(review.comment),
                         if (review.reviewDate != null) ...[

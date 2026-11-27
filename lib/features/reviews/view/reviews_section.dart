@@ -5,17 +5,24 @@ import 'package:tourist_app/features/reviews/view/reviews_view.dart';
 import 'package:tourist_app/features/reviews/view_model/cubit/reviews_cubit.dart';
 
 class ReviewsSection extends StatelessWidget {
-  final int placeId;
+  final String referenceType;
+  final int referenceId;
 
-  const ReviewsSection({super.key, required this.placeId});
+  const ReviewsSection({
+    super.key,
+    required this.referenceType,
+    required this.referenceId,
+  });
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          getIt<ReviewsCubit>()
-            ..loadReviews(referenceType: 'Place', referenceId: placeId),
-      child: ReviewsView(placeId: placeId),
+      create: (context) => getIt<ReviewsCubit>()
+        ..loadReviews(referenceType: referenceType, referenceId: referenceId),
+      child: ReviewsView(
+        referenceType: referenceType,
+        referenceId: referenceId,
+      ),
     );
   }
 }

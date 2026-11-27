@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tourist_app/core/helpers/spacing.dart';
 import 'package:tourist_app/features/guides/data/models/guide_model.dart';
 import 'package:tourist_app/features/guides/view/widgets/state_widget.dart';
+import 'package:tourist_app/features/reviews/view/reviews_section.dart';
 
 class GuideDetailsAbout extends StatelessWidget {
   final GuideModel guide;
@@ -42,9 +44,9 @@ class GuideDetailsAbout extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: 23.h),
+          verticalSpace(23),
           _sectionTitle(context, 'About ${guide.fullName}'),
-          SizedBox(height: 8.h),
+          verticalSpace(8),
           Text(
             guide.bio.isEmpty ? '' : guide.bio,
             style: TextStyle(
@@ -54,9 +56,9 @@ class GuideDetailsAbout extends StatelessWidget {
             ),
           ),
           if (_split(guide.specialties).isNotEmpty) ...[
-            SizedBox(height: 23.h),
+            verticalSpace(23),
             _sectionTitle(context, 'Specialties'),
-            SizedBox(height: 10.h),
+            verticalSpace(10),
             Wrap(
               spacing: 8.w,
               runSpacing: 8.h,
@@ -66,9 +68,9 @@ class GuideDetailsAbout extends StatelessWidget {
             ),
           ],
           if (_split(guide.languages).isNotEmpty) ...[
-            SizedBox(height: 23.h),
+            verticalSpace(23),
             _sectionTitle(context, 'Languages'),
-            SizedBox(height: 10.h),
+            verticalSpace(10),
             Wrap(
               spacing: 8.w,
               runSpacing: 8.h,
@@ -77,7 +79,13 @@ class GuideDetailsAbout extends StatelessWidget {
               ).map((s) => _chip(context, s)).toList(),
             ),
           ],
-          SizedBox(height: 90.h),
+
+          verticalSpace(23),
+          //add reviews
+          _sectionTitle(context, 'Reviews'),
+          verticalSpace(10),
+          ReviewsSection(referenceType: 'Guide', referenceId: guide.id),
+          verticalSpace(70),
         ],
       ),
     );

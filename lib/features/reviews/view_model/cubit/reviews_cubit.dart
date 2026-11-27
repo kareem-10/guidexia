@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tourist_app/core/error/exceptions.dart';
+
 import 'package:tourist_app/features/reviews/data/repos/reviews_repo.dart';
 import 'package:tourist_app/features/reviews/view_model/cubit/reviews_state.dart';
 
@@ -12,23 +12,34 @@ class ReviewsCubit extends Cubit<ReviewsState> {
     required String referenceType,
     required int referenceId,
   }) async {
-    emit(state.copyWith(status: ReviewsStatus.loading, errorMessage: null));
+    emit(state.copyWith(status: ReviewsStatus.loading, clearError: true));
 
-    try {
-      final reviews = await reviewsRepo.getReviews(
-        referenceType: referenceType,
-        referenceId: referenceId,
-      );
+    final result = await reviewsRepo.getReviews(
+      referenceType: referenceType,
+      referenceId: referenceId,
+    );
 
-      emit(state.copyWith(status: ReviewsStatus.success, reviews: reviews));
-    } catch (e) {
-      emit(
-        state.copyWith(
-          status: ReviewsStatus.failure,
-          errorMessage: e.toString(),
-        ),
-      );
-    }
+    if (isClosed) return;
+
+    result.fold(
+      (failure) {
+        emit(
+          state.copyWith(
+            status: ReviewsStatus.failure,
+            errorMessage: failure.message,
+          ),
+        );
+      },
+      (reviews) {
+        emit(
+          state.copyWith(
+            status: ReviewsStatus.success,
+            reviews: List.unmodifiable(reviews),
+            clearError: true,
+          ),
+        );
+      },
+    );
   }
 
   Future<bool> addReview({
@@ -37,26 +48,35 @@ class ReviewsCubit extends Cubit<ReviewsState> {
     required int rating,
     required String comment,
   }) async {
-    emit(state.copyWith(isSubmitting: true, errorMessage: null));
+    emit(state.copyWith(isSubmitting: true, clearError: true));
 
-    try {
-      await reviewsRepo.addReview(
-        referenceType: referenceType,
-        referenceId: referenceId,
-        rating: rating,
-        comment: comment,
-      );
+    final result = await reviewsRepo.addReview(
+      referenceType: referenceType,
+      referenceId: referenceId,
+      rating: rating,
+      comment: comment,
+    );
 
-      emit(state.copyWith(isSubmitting: false));
+    if (isClosed) return false;
 
-      await loadReviews(referenceType: referenceType, referenceId: referenceId);
+    return result.fold(
+      (failure) {
+        emit(
+          state.copyWith(isSubmitting: false, errorMessage: failure.message),
+        );
+        return false;
+      },
+      (_) async {
+        emit(state.copyWith(isSubmitting: false));
 
-      return true;
-    } catch (e) {
-      emit(state.copyWith(isSubmitting: false, errorMessage: e.toString()));
+        await loadReviews(
+          referenceType: referenceType,
+          referenceId: referenceId,
+        );
 
-      return false;
-    }
+        return true;
+      },
+    );
   }
 
   Future<bool> deleteReview({
@@ -64,33 +84,27 @@ class ReviewsCubit extends Cubit<ReviewsState> {
     required String referenceType,
     required int referenceId,
   }) async {
-    emit(state.copyWith(isDeleting: true, errorMessage: null));
+    emit(state.copyWith(isDeleting: true, clearError: true));
 
-    try {
-      await reviewsRepo.deleteReview(reviewId);
+    final result = await reviewsRepo.deleteReview(reviewId);
 
-      emit(state.copyWith(isDeleting: false));
+    if (isClosed) return false;
 
-      await loadReviews(referenceType: referenceType, referenceId: referenceId);
+    return result.fold(
+      (failure) {
+        emit(state.copyWith(isDeleting: false, errorMessage: failure.message));
+        return false;
+      },
+      (_) async {
+        emit(state.copyWith(isDeleting: false));
 
-      return true;
-    } on ServerException catch (e) {
-      final message = e.errModel.status == 403
-          ? 'You can only delete your own reviews.'
-          : e.errModel.errorMessage;
+        await loadReviews(
+          referenceType: referenceType,
+          referenceId: referenceId,
+        );
 
-      emit(state.copyWith(isDeleting: false, errorMessage: message));
-
-      return false;
-    } catch (e) {
-      emit(
-        state.copyWith(
-          isDeleting: false,
-          errorMessage: 'Failed to delete review. Please try again.',
-        ),
-      );
-
-      return false;
-    }
+        return true;
+      },
+    );
   }
 }

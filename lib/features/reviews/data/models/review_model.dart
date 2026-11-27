@@ -18,16 +18,26 @@ class ReviewModel {
   });
 
   factory ReviewModel.fromJson(Map<String, dynamic> json) {
+    int asInt(dynamic value) {
+      if (value is num) return value.toInt();
+      return int.tryParse(value?.toString() ?? '') ?? 0;
+    }
+
+    double asDouble(dynamic value) {
+      if (value is num) return value.toDouble();
+      return double.tryParse(value?.toString() ?? '') ?? 0;
+    }
+
     return ReviewModel(
-      id: json['id'] as int,
-      referenceType: json['referenceType'] ?? '',
-      referenceId: json['referenceId'] as int,
-      rating: (json['rating'] as num).toDouble(),
-      comment: json['comment'] ?? '',
-      reviewDate: json['reviewDate'] != null
-          ? DateTime.tryParse(json['reviewDate'])
-          : null,
-      reviewerName: json['reviewerName'] ?? '',
+      id: asInt(json['id']),
+      referenceType: json['referenceType']?.toString() ?? '',
+      referenceId: asInt(json['referenceId']),
+      rating: asDouble(json['rating']),
+      comment: json['comment']?.toString() ?? '',
+      reviewDate: json['reviewDate'] == null
+          ? null
+          : DateTime.tryParse(json['reviewDate'].toString()),
+      reviewerName: json['reviewerName']?.toString() ?? '',
     );
   }
 }

@@ -5,22 +5,29 @@ import 'package:tourist_app/features/reviews/view_model/cubit/reviews_cubit.dart
 void showAddReviewDialog(
   BuildContext context,
   ReviewsCubit cubit, {
-  required int placeId,
+  required String referenceType,
+  required int referenceId,
 }) {
   showDialog(
     context: context,
-    builder: (_) => AddReviewDialog(cubit: cubit, placeId: placeId),
+    builder: (_) => AddReviewDialog(
+      cubit: cubit,
+      referenceType: referenceType,
+      referenceId: referenceId,
+    ),
   );
 }
 
 class AddReviewDialog extends StatefulWidget {
   final ReviewsCubit cubit;
-  final int placeId;
+  final String referenceType;
+  final int referenceId;
 
   const AddReviewDialog({
     super.key,
     required this.cubit,
-    required this.placeId,
+    required this.referenceType,
+    required this.referenceId,
   });
 
   @override
@@ -52,8 +59,8 @@ class _AddReviewDialogState extends State<AddReviewDialog> {
     setState(() => _isSubmitting = true);
 
     final success = await widget.cubit.addReview(
-      referenceType: 'Place',
-      referenceId: widget.placeId,
+      referenceType: widget.referenceType,
+      referenceId: widget.referenceId,
       rating: _rating,
       comment: comment,
     );
@@ -111,11 +118,7 @@ class _AddReviewDialogState extends State<AddReviewDialog> {
         FilledButton(
           onPressed: _isSubmitting ? null : _submitReview,
           child: _isSubmitting
-              ? const SizedBox(
-                  height: 18,
-                  width: 18,
-                  child: CircularProgressIndicator(strokeWidth: 2),
-                )
+              ? Image.asset('assets/images/loading.gif', height: 20)
               : const Text('Submit'),
         ),
       ],

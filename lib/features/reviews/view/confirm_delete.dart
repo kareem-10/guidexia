@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+
 import 'package:tourist_app/core/functions/show_toast.dart';
 import 'package:tourist_app/features/reviews/view_model/cubit/reviews_cubit.dart';
 
 Future<void> confirmDeleteReview(
   BuildContext context,
-  ReviewsCubit cubit,
-  int placeId,
-  int reviewId,
-) async {
+  ReviewsCubit cubit, {
+  required String referenceType,
+  required int referenceId,
+  required int reviewId,
+}) async {
   final confirmed = await showDialog<bool>(
     context: context,
     builder: (dialogContext) => AlertDialog(
@@ -30,8 +32,8 @@ Future<void> confirmDeleteReview(
 
   final success = await cubit.deleteReview(
     reviewId: reviewId,
-    referenceType: 'Place',
-    referenceId: placeId,
+    referenceType: referenceType,
+    referenceId: referenceId,
   );
 
   if (!context.mounted) return;
