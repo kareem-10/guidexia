@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'package:tourist_app/core/helpers/spacing.dart';
+import 'package:tourist_app/features/place_details/view/widgets/details_section_title.dart';
 import 'package:tourist_app/features/place_details/view_model/cubit/place_details_cubit.dart';
 import 'package:tourist_app/features/place_details/view_model/cubit/place_details_state.dart';
 
@@ -16,88 +19,44 @@ class ActivitiesSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Activities',
-          style: TextStyle(
-            fontSize: 18.sp,
-            fontWeight: FontWeight.bold,
-            color: scheme.onSurface,
-          ),
+        const DetailsSectionTitle(
+          title: 'Things to do',
+          subtitle: 'Explore experiences available at this destination.',
         ),
-        SizedBox(height: 10.h),
+
+        verticalSpace(15),
+
         BlocBuilder<PlaceDetailsCubit, PlaceDetailsState>(
           builder: (context, state) {
             if (state is ActivitiesLoading) {
               return const Center(
                 child: Padding(
-                  padding: EdgeInsets.all(20),
+                  padding: EdgeInsets.all(25),
                   child: Image(image: AssetImage('assets/images/loading.gif')),
                 ),
               );
             }
 
             if (state is ActivitiesFailure) {
-              return Container(
-                width: double.infinity,
-                padding: EdgeInsets.all(16.w),
-                decoration: BoxDecoration(
-                  color: scheme.surface,
-                  borderRadius: BorderRadius.circular(16.r),
-                ),
-                child: Column(
-                  children: [
-                    Icon(
-                      Icons.cloud_off_outlined,
-                      size: 30.sp,
-                      color: scheme.onSurfaceVariant,
-                    ),
-                    SizedBox(height: 8.h),
-                    Text(
-                      'Could not load activities.',
-                      style: TextStyle(
-                        fontSize: 13.sp,
-                        color: scheme.onSurface,
-                      ),
-                    ),
-                    SizedBox(height: 4.h),
-                    Text(
-                      state.message,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 10.sp,
-                        color: scheme.onSurfaceVariant,
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        context.read<PlaceDetailsCubit>().getActivities(
-                          placeId,
-                        );
-                      },
-                      child: const Text('Try again'),
-                    ),
-                  ],
+              return _ActivitiesMessage(
+                icon: Icons.cloud_off_outlined,
+                message: 'Could not load activities.',
+                scheme: scheme,
+                child: TextButton(
+                  onPressed: () {
+                    context.read<PlaceDetailsCubit>().getActivities(placeId);
+                  },
+                  child: const Text('Try again'),
                 ),
               );
             }
 
             if (state is ActivitiesSuccess) {
               if (state.activities.isEmpty) {
-                return Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.all(18.w),
-                  decoration: BoxDecoration(
-                    color: scheme.surface,
-                    borderRadius: BorderRadius.circular(16.r),
-                  ),
-                  child: Text(
-                    'No activities available for this place.',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 12.sp,
-                      color: scheme.onSurfaceVariant,
-                    ),
-                  ),
+                return _ActivitiesMessage(
+                  icon: Icons.explore_outlined,
+                  message: 'No activities available for this place.',
+                  scheme: scheme,
                 );
               }
 
@@ -105,11 +64,14 @@ class ActivitiesSection extends StatelessWidget {
                 children: state.activities.map((activity) {
                   return Container(
                     width: double.infinity,
-                    margin: EdgeInsets.only(bottom: 10.h),
-                    padding: EdgeInsets.all(14.w),
+                    margin: EdgeInsets.only(bottom: 12.h),
+                    padding: EdgeInsets.all(15.w),
                     decoration: BoxDecoration(
-                      color: scheme.surface,
-                      borderRadius: BorderRadius.circular(16.r),
+                      color: scheme.surfaceContainerLow,
+                      borderRadius: BorderRadius.circular(19.r),
+                      border: Border.all(
+                        color: scheme.outlineVariant.withValues(alpha: 0.4),
+                      ),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -121,15 +83,16 @@ class ActivitiesSection extends StatelessWidget {
                               child: Text(
                                 activity.name,
                                 style: TextStyle(
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.bold,
                                   color: scheme.onSurface,
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w800,
                                 ),
                               ),
                             ),
+
                             if (activity.badge != null &&
                                 activity.badge!.trim().isNotEmpty) ...[
-                              SizedBox(width: 8.w),
+                              horizontalSpace(8),
                               Container(
                                 padding: EdgeInsets.symmetric(
                                   horizontal: 9.w,
@@ -142,51 +105,64 @@ class ActivitiesSection extends StatelessWidget {
                                 child: Text(
                                   activity.badge!,
                                   style: TextStyle(
-                                    fontSize: 9.sp,
                                     color: scheme.primary,
-                                    fontWeight: FontWeight.w600,
+                                    fontSize: 9.sp,
+                                    fontWeight: FontWeight.w700,
                                   ),
                                 ),
                               ),
                             ],
                           ],
                         ),
+
                         if (activity.description.isNotEmpty) ...[
-                          SizedBox(height: 7.h),
+                          verticalSpace(8),
                           Text(
                             activity.description,
                             style: TextStyle(
-                              fontSize: 11.sp,
-                              height: 1.5,
                               color: scheme.onSurfaceVariant,
+                              fontSize: 11.sp,
+                              height: 1.6,
                             ),
                           ),
                         ],
-                        SizedBox(height: 12.h),
+
+                        verticalSpace(14),
+
+                        Divider(
+                          color: scheme.outlineVariant.withValues(alpha: 0.5),
+                          height: 1,
+                        ),
+
+                        verticalSpace(12),
+
                         Row(
                           children: [
                             Icon(
-                              Icons.access_time_rounded,
-                              size: 15.sp,
+                              Icons.schedule_rounded,
                               color: scheme.primary,
+                              size: 16.sp,
                             ),
-                            SizedBox(width: 5.w),
+                            horizontalSpace(5),
                             Text(
                               _formatDuration(activity.durationInMinutes),
                               style: TextStyle(
-                                fontSize: 11.sp,
                                 color: scheme.onSurfaceVariant,
+                                fontSize: 10.sp,
+                                fontWeight: FontWeight.w500,
                               ),
                             ),
+
                             const Spacer(),
+
                             Text(
                               activity.price <= 0
                                   ? 'Free'
                                   : '${activity.price.toStringAsFixed(0)} EGP',
                               style: TextStyle(
-                                fontSize: 13.sp,
-                                fontWeight: FontWeight.bold,
                                 color: scheme.primary,
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w800,
                               ),
                             ),
                           ],
@@ -215,5 +191,43 @@ class ActivitiesSection extends StatelessWidget {
     if (remainingMinutes == 0) return '$hours hr';
 
     return '$hours hr $remainingMinutes min';
+  }
+}
+
+class _ActivitiesMessage extends StatelessWidget {
+  final IconData icon;
+  final String message;
+  final ColorScheme scheme;
+  final Widget? child;
+
+  const _ActivitiesMessage({
+    required this.icon,
+    required this.message,
+    required this.scheme,
+    this.child,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(20.w),
+      decoration: BoxDecoration(
+        color: scheme.surfaceContainerLow,
+        borderRadius: BorderRadius.circular(18.r),
+      ),
+      child: Column(
+        children: [
+          Icon(icon, size: 30.sp, color: scheme.onSurfaceVariant),
+          verticalSpace(10),
+          Text(
+            message,
+            textAlign: TextAlign.center,
+            style: TextStyle(color: scheme.onSurfaceVariant, fontSize: 12.sp),
+          ),
+          if (child != null) ...[verticalSpace(5), child!],
+        ],
+      ),
+    );
   }
 }

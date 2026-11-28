@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-void showToast(String msg) {
-  final brightness =
+void showToast(String msg, {Brightness? brightness}) {
+  final currentBrightness =
+      brightness ??
       WidgetsBinding.instance.platformDispatcher.platformBrightness;
-  final isDark = brightness == Brightness.dark;
-  final bg = isDark
-      ? const Color(0xFF4DB6AC).withValues(alpha: 0.85)
-      : const Color(0xff0c5656).withValues(alpha: 0.85);
+
+  final isDark = currentBrightness == Brightness.dark;
+
+  final bg = isDark ? const Color(0xFF4DB6AC) : const Color(0xFF0C5656);
+
   final fg = isDark ? const Color(0xFF003731) : Colors.white;
+
   Fluttertoast.showToast(
     msg: msg,
     toastLength: Toast.LENGTH_SHORT,
     gravity: ToastGravity.BOTTOM,
-    timeInSecForIosWeb: 1,
+    timeInSecForIosWeb: 2,
     backgroundColor: bg,
     textColor: fg,
-    fontSize: 16.0,
+    fontSize: 14.sp,
   );
 }
-

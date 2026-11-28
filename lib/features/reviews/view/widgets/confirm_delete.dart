@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:tourist_app/core/functions/show_toast.dart';
 import 'package:tourist_app/features/reviews/view_model/cubit/reviews_cubit.dart';
 
@@ -10,19 +9,33 @@ Future<void> confirmDeleteReview(
   required int referenceId,
   required int reviewId,
 }) async {
+  final scheme = Theme.of(context).colorScheme;
+
   final confirmed = await showDialog<bool>(
     context: context,
     builder: (dialogContext) => AlertDialog(
-      title: const Text('Delete Review'),
-      content: const Text('Are you sure you want to delete this review?'),
+      backgroundColor: scheme.surface,
+      surfaceTintColor: Colors.transparent,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22)),
+      icon: Icon(Icons.delete_outline_rounded, color: scheme.error, size: 32),
+      title: const Text('Delete Review?'),
+      content: const Text(
+        'Are you sure you want to delete this review? This action cannot be undone.',
+        textAlign: TextAlign.center,
+      ),
+      actionsAlignment: MainAxisAlignment.center,
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(dialogContext, false),
           child: const Text('Cancel'),
         ),
-        TextButton(
+        FilledButton(
+          style: FilledButton.styleFrom(
+            backgroundColor: scheme.error,
+            foregroundColor: scheme.onError,
+          ),
           onPressed: () => Navigator.pop(dialogContext, true),
-          child: const Text('Delete', style: TextStyle(color: Colors.red)),
+          child: const Text('Delete'),
         ),
       ],
     ),

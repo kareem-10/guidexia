@@ -2,7 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:tourist_app/core/di/dependancy_injection.dart';
+import 'package:tourist_app/core/helpers/spacing.dart';
 import 'package:tourist_app/core/widgets/favorite_icon_button.dart';
 import 'package:tourist_app/features/explore/data/models/place_model.dart';
 import 'package:tourist_app/features/place_details/view/place_details_screen.dart';
@@ -16,178 +18,166 @@ class PlaceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
-    final overlay = scheme.primary.withValues(alpha: 0.7);
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => BlocProvider(
-              create: (context) =>
-                  getIt<PlaceDetailsCubit>()..getActivities(place.id),
-              child: PlaceDetailsScreen(place: place),
+
+    final imageUrl = place.thumbnailUrl.isNotEmpty
+        ? place.thumbnailUrl
+        : place.imageUrl;
+
+    return Material(
+      color: scheme.surface,
+      borderRadius: BorderRadius.circular(22.r),
+      clipBehavior: Clip.antiAlias,
+      elevation: 3,
+      shadowColor: Colors.black.withValues(alpha: 0.12),
+      child: InkWell(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => BlocProvider(
+                create: (_) =>
+                    getIt<PlaceDetailsCubit>()..getActivities(place.id),
+                child: PlaceDetailsScreen(place: place),
+              ),
             ),
-          ),
-        );
-      },
-      child: Container(
-        decoration: BoxDecoration(
-          color: scheme.surface,
-          borderRadius: BorderRadius.circular(17.r),
-          border: Border.all(color: scheme.outlineVariant),
-        ),
-        clipBehavior: Clip.antiAlias,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          );
+        },
+        child: Stack(
+          fit: StackFit.expand,
           children: [
-            Expanded(
-              flex: 6,
-              child: Hero(
-                tag: place.id,
-                child: Stack(
-                  children: [
-                    Positioned.fill(
-                      child: CachedNetworkImage(
-                        imageUrl: place.thumbnailUrl.isNotEmpty
-                            ? place.thumbnailUrl
-                            : place.imageUrl,
-                        fit: BoxFit.cover,
-                        fadeInDuration: const Duration(milliseconds: 500),
-                        fadeOutDuration: const Duration(milliseconds: 500),
-                        fadeInCurve: Curves.easeIn,
-                        fadeOutCurve: Curves.easeOut,
-                        placeholder: (_, _) {
-                          return Image.asset(
-                            'assets/images/loading.gif',
-                            fit: BoxFit.cover,
-                          );
-                        },
-                        errorWidget: (_, _, _) {
-                          return Center(
-                            child: Icon(
-                              Icons.image_not_supported,
-                              color: scheme.onSurfaceVariant,
-                            ),
-                          );
-                        },
-                      ),
-                    ),
+            // Background image
+            Hero(
+              tag: place.id,
+              child: CachedNetworkImage(
+                imageUrl: imageUrl,
+                fit: BoxFit.cover,
+                fadeInDuration: const Duration(milliseconds: 400),
+                placeholder: (_, _) =>
+                    Image.asset('assets/images/loading.gif', fit: BoxFit.cover),
+                errorWidget: (_, _, _) => Container(
+                  color: scheme.surfaceContainerHighest,
+                  child: Icon(
+                    Icons.image_not_supported_outlined,
+                    color: scheme.onSurfaceVariant,
+                    size: 30.sp,
+                  ),
+                ),
+              ),
+            ),
 
-                    Positioned(
-                      top: 10.h,
-                      left: 10.w,
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 9.w,
-                          vertical: 5.h,
-                        ),
-                        decoration: BoxDecoration(
-                          color: overlay,
-                          borderRadius: BorderRadius.circular(20.r),
-                        ),
-                        child: Text(
-                          _displayCategory(place.category),
-                          style: TextStyle(
-                            color: scheme.onPrimary,
-                            fontSize: 8.sp,
-                          ),
-                        ),
-                      ),
-                    ),
-
-                    if (place.isFeatured)
-                      Positioned(
-                        bottom: 10.h,
-                        left: 10.w,
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 8.w,
-                            vertical: 4.h,
-                          ),
-                          decoration: BoxDecoration(
-                            color: overlay,
-                            borderRadius: BorderRadius.circular(20.r),
-                          ),
-                          child: Text(
-                            'Featured',
-                            style: TextStyle(
-                              color: scheme.onPrimary,
-                              fontSize: 8.sp,
-                            ),
-                          ),
-                        ),
-                      ),
-
-                    Positioned(
-                      top: 8.h,
-                      right: 8.w,
-                      child: FavoriteIconButton(
-                        entityId: place.id,
-                        entityType: 'Place',
-                      ),
-                    ),
+            // Dark gradient
+            DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  stops: const [0.0, 0.35, 1.0],
+                  colors: [
+                    Colors.black.withValues(alpha: 0.28),
+                    Colors.transparent,
+                    Colors.black.withValues(alpha: 0.78),
                   ],
                 ),
               ),
             ),
 
-            Expanded(
-              flex: 2,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        place.name,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: textTheme.titleSmall?.copyWith(
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-
-                    Icon(Icons.star, size: 15.sp, color: scheme.tertiary),
-
-                    SizedBox(width: 3.w),
-
-                    Text(
-                      place.averageRating.toStringAsFixed(1),
-                      style: TextStyle(color: scheme.tertiary, fontSize: 10.sp),
-                    ),
-                  ],
+            // Category
+            Positioned(
+              top: 11.h,
+              left: 10.w,
+              child: _GlassBadge(
+                child: Text(
+                  _displayCategory(place.category),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 9.sp,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
             ),
 
-            Expanded(
-              flex: 1,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10.w),
+            // Favorite
+            Positioned(
+              top: 7.h,
+              right: 7.w,
+              child: FavoriteIconButton(
+                entityId: place.id,
+                entityType: 'Place',
+              ),
+            ),
+
+            // Rating
+            Positioned(
+              top: 52.h,
+              left: 10.w,
+              child: _GlassBadge(
                 child: Row(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Icon(
-                      Icons.location_on_outlined,
-                      color: scheme.onSurfaceVariant,
+                      Icons.star_rounded,
+                      color: const Color(0xFFFFC857),
                       size: 13.sp,
                     ),
-                    SizedBox(width: 3.w),
-                    Expanded(
-                      child: Text(
-                        '${place.city}, ${place.country}',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          color: scheme.onSurfaceVariant,
-                          fontSize: 9.sp,
-                        ),
+                    horizontalSpace(3),
+                    Text(
+                      place.averageRating.toStringAsFixed(1),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 9.sp,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
                   ],
                 ),
+              ),
+            ),
+
+            // Place information
+            Positioned(
+              bottom: 13.h,
+              left: 11.w,
+              right: 10.w,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    place.name,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w800,
+                      height: 1.2,
+                    ),
+                  ),
+                  verticalSpace(7),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.location_on_rounded,
+                        color: Colors.white.withValues(alpha: 0.85),
+                        size: 13.sp,
+                      ),
+                      horizontalSpace(3),
+                      Expanded(
+                        child: Text(
+                          '${place.city}, ${place.country}',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: Colors.white.withValues(alpha: 0.9),
+                            fontSize: 9.sp,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ],
@@ -199,7 +189,7 @@ class PlaceCard extends StatelessWidget {
   String _displayCategory(String category) {
     switch (category) {
       case 'CoastalEscape':
-        return 'Coastal escape';
+        return 'Coastal Escape';
       case 'Cultural':
         return 'Culture';
       case 'Historic':
@@ -207,5 +197,24 @@ class PlaceCard extends StatelessWidget {
       default:
         return category;
     }
+  }
+}
+
+class _GlassBadge extends StatelessWidget {
+  final Widget child;
+
+  const _GlassBadge({required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 9.w, vertical: 6.h),
+      decoration: BoxDecoration(
+        color: Colors.black.withValues(alpha: 0.38),
+        borderRadius: BorderRadius.circular(10.r),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
+      ),
+      child: child,
+    );
   }
 }

@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'package:tourist_app/core/helpers/spacing.dart';
 import 'package:tourist_app/core/widgets/favorite_icon_button.dart';
 import 'package:tourist_app/core/widgets/round_button.dart';
 import 'package:tourist_app/features/explore/data/models/place_model.dart';
@@ -8,6 +10,7 @@ import 'package:tourist_app/features/place_details/view/widgets/about_section.da
 import 'package:tourist_app/features/place_details/view/widgets/activities_section.dart';
 import 'package:tourist_app/features/place_details/view/widgets/entry_fee_section.dart';
 import 'package:tourist_app/features/place_details/view/widgets/location_section.dart';
+import 'package:tourist_app/features/place_details/view/widgets/place_details_app_bar.dart';
 import 'package:tourist_app/features/place_details/view/widgets/rating_section.dart';
 import 'package:tourist_app/features/place_details/view/widgets/tags_section.dart';
 import 'package:tourist_app/features/reviews/view/reviews_section.dart';
@@ -19,165 +22,46 @@ class PlaceDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
     return Scaffold(
       body: CustomScrollView(
+        physics: const BouncingScrollPhysics(),
         slivers: [
-          SliverAppBar(
-            expandedHeight: 300.h,
-            pinned: true,
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            leading: Padding(
-              padding: EdgeInsets.all(8.w),
-              child: RoundButton(
-                icon: Icons.arrow_back,
-                onTap: () => Navigator.pop(context),
-              ),
-            ),
-            actions: [
-              Padding(
-                padding: EdgeInsets.all(10.w),
-                child: FavoriteIconButton(
-                  entityId: place.id,
-                  entityType: 'Place',
-                ),
-              ),
-            ],
-            flexibleSpace: FlexibleSpaceBar(
-              background: ClipRRect(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(25.r),
-                  bottomRight: Radius.circular(25.r),
-                ),
-                child: Hero(
-                  tag: place.id,
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      CachedNetworkImage(
-                        imageUrl: place.imageUrl.isNotEmpty
-                            ? place.imageUrl
-                            : place.thumbnailUrl,
-                        fit: BoxFit.cover,
-                        placeholder: (_, _) {
-                          return Image.asset(
-                            'assets/images/loading.gif',
-                            fit: BoxFit.cover,
-                          );
-                        },
-                        errorWidget: (_, _, _) {
-                          return Center(
-                            child: Icon(
-                              Icons.image_not_supported,
-                              size: 40,
-                              color: scheme.onSurfaceVariant,
-                            ),
-                          );
-                        },
-                      ),
-                      Positioned.fill(
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                                scheme.shadow.withValues(alpha: 0.15),
-                                scheme.shadow.withValues(alpha: 0.65),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        left: 20.w,
-                        right: 20.w,
-                        bottom: 20.h,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            if (place.isFeatured)
-                              Container(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 10.w,
-                                  vertical: 5.h,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: scheme.primary,
-                                  borderRadius: BorderRadius.circular(20.r),
-                                ),
-                                child: Text(
-                                  'Featured',
-                                  style: TextStyle(
-                                    color: scheme.onPrimary,
-                                    fontSize: 10.sp,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                            SizedBox(height: 8.h),
-                            Text(
-                              place.name,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 27.sp,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(height: 5.h),
-                            Row(
-                              children: [
-                                const Icon(
-                                  Icons.location_on,
-                                  color: Colors.white70,
-                                  size: 16,
-                                ),
-                                SizedBox(width: 4.w),
-                                Expanded(
-                                  child: Text(
-                                    '${place.city}, ${place.country}',
-                                    style: TextStyle(
-                                      color: Colors.white70,
-                                      fontSize: 12.sp,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
+          PlaceDetailsAppBar(place: place),
+
           SliverToBoxAdapter(
             child: Padding(
-              padding: EdgeInsets.fromLTRB(20.w, 20.h, 20.w, 80.h),
+              padding: EdgeInsets.fromLTRB(20.w, 24.h, 20.w, 50.h),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   RatingSection(place: place),
-                  SizedBox(height: 22.h),
+
+                  verticalSpace(28),
+
                   AboutSection(description: place.description),
-                  SizedBox(height: 22.h),
+
+                  verticalSpace(28),
+
                   ActivitiesSection(placeId: place.id),
-                  SizedBox(height: 22.h),
+
+                  verticalSpace(28),
+
                   EntryFeeSection(entryFee: place.entryFee),
+
                   if (place.tags.isNotEmpty) ...[
-                    SizedBox(height: 22.h),
+                    verticalSpace(28),
                     TagsSection(tags: place.tags),
                   ],
-                  SizedBox(height: 22.h),
+
+                  verticalSpace(28),
+
                   LocationSection(place: place),
-                  SizedBox(height: 22.h),
-                  SizedBox(height: 22.h),
+
+                  verticalSpace(30),
+
                   ReviewsSection(referenceType: 'Place', referenceId: place.id),
+
+                  verticalSpace(30),
                 ],
               ),
             ),

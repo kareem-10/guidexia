@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'package:tourist_app/core/helpers/spacing.dart';
+import 'package:tourist_app/features/place_details/view/widgets/details_section_title.dart';
+
 class TagsSection extends StatelessWidget {
   final List<String> tags;
 
@@ -9,37 +12,33 @@ class TagsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Tags',
-          style: TextStyle(
-            fontSize: 18.sp,
-            fontWeight: FontWeight.bold,
-            color: scheme.onSurface,
-          ),
+        const DetailsSectionTitle(
+          title: 'Explore its highlights',
+          subtitle: 'Discover what this place has to offer.',
         ),
-        SizedBox(height: 10.h),
+
+        verticalSpace(13),
+
         Wrap(
-          spacing: 8.w,
-          runSpacing: 8.h,
+          spacing: 9.w,
+          runSpacing: 9.h,
           children: tags.map((tag) {
             return Container(
-              padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 7.h),
+              padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 9.h),
               decoration: BoxDecoration(
-                color: scheme.primary.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(20.r),
-                border: Border.all(
-                  color: scheme.primary.withValues(alpha: 0.18),
-                ),
+                color: scheme.primary.withValues(alpha: 0.09),
+                borderRadius: BorderRadius.circular(30.r),
               ),
               child: Text(
                 tag,
                 style: TextStyle(
-                  fontSize: 10.sp,
                   color: scheme.primary,
-                  fontWeight: FontWeight.w500,
+                  fontSize: 10.sp,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             );

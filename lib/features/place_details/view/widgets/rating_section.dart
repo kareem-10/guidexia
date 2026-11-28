@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tourist_app/core/helpers/spacing.dart';
 import 'package:tourist_app/features/explore/data/models/place_model.dart';
 
 class RatingSection extends StatelessWidget {
@@ -10,63 +11,89 @@ class RatingSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
+
     return Container(
-      padding: EdgeInsets.all(16.w),
+      width: double.infinity,
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 17.h),
       decoration: BoxDecoration(
-        color: scheme.surface,
-        borderRadius: BorderRadius.circular(16.r),
+        color: scheme.surfaceContainerLow,
+        borderRadius: BorderRadius.circular(20.r),
+        border: Border.all(color: scheme.outlineVariant.withValues(alpha: 0.4)),
       ),
       child: Row(
         children: [
           Container(
-            width: 48.w,
-            height: 48.w,
+            width: 54.w,
+            height: 54.w,
             decoration: BoxDecoration(
-              color: scheme.tertiary.withValues(alpha: 0.14),
-              borderRadius: BorderRadius.circular(14.r),
+              color: const Color(0xFFFFC857).withValues(alpha: 0.17),
+              borderRadius: BorderRadius.circular(16.r),
             ),
-            child: Icon(Icons.star_rounded, color: scheme.tertiary, size: 28),
+            child: const Icon(
+              Icons.star_rounded,
+              color: Color(0xFFFFB52E),
+              size: 32,
+            ),
           ),
-          SizedBox(width: 12.w),
+
+          horizontalSpace(13),
+
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  place.averageRating.toStringAsFixed(1),
+                  style: TextStyle(
+                    fontSize: 22.sp,
+                    fontWeight: FontWeight.w800,
+                    color: scheme.onSurface,
+                  ),
+                ),
+                verticalSpace(3),
+                Row(
+                  children: List.generate(
+                    5,
+                    (index) => Icon(
+                      index < place.averageRating.round()
+                          ? Icons.star_rounded
+                          : Icons.star_outline_rounded,
+                      size: 13.sp,
+                      color: const Color(0xFFFFB52E),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          Container(width: 1, height: 42.h, color: scheme.outlineVariant),
+
+          horizontalSpace(15),
+
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                place.averageRating.toStringAsFixed(1),
+                '${place.reviewCount}',
                 style: TextStyle(
-                  fontSize: 19.sp,
-                  fontWeight: FontWeight.bold,
+                  fontSize: 17.sp,
+                  fontWeight: FontWeight.w800,
                   color: scheme.onSurface,
                 ),
               ),
-              SizedBox(height: 2.h),
+              verticalSpace(3),
               Text(
-                '${place.reviewCount} reviews',
+                'Reviews',
                 style: TextStyle(
-                  fontSize: 11.sp,
+                  fontSize: 10.sp,
                   color: scheme.onSurfaceVariant,
                 ),
               ),
             ],
           ),
-          const Spacer(),
-          Text(
-            _ratingText(place.averageRating),
-            style: TextStyle(
-              fontSize: 12.sp,
-              fontWeight: FontWeight.w600,
-              color: scheme.onSurfaceVariant,
-            ),
-          ),
         ],
       ),
     );
-  }
-
-  String _ratingText(double rating) {
-    if (rating >= 4.5) return 'Excellent';
-    if (rating >= 4) return 'Very good';
-    if (rating >= 3) return 'Good';
-    return 'Average';
   }
 }

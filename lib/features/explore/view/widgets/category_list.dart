@@ -21,45 +21,50 @@ class CategoryList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
     return SizedBox(
-      height: 38.h,
-      child: ListView.separated(
-        scrollDirection: Axis.horizontal,
-        itemCount: categories.length,
-        separatorBuilder: (_, _) => SizedBox(width: 10.w),
-        itemBuilder: (context, index) {
-          final category = categories[index];
+      height: 39.h,
+      child: BlocBuilder<ExploreCubit, ExploreState>(
+        builder: (context, state) {
+          final cubit = context.read<ExploreCubit>();
+          final scheme = Theme.of(context).colorScheme;
 
-          return BlocBuilder<ExploreCubit, ExploreState>(
-            builder: (context, state) {
-              final selected =
-                  context.read<ExploreCubit>().selectedCategory ==
-                  category['api'];
+          return ListView.separated(
+            scrollDirection: Axis.horizontal,
+            itemCount: categories.length,
+            separatorBuilder: (_, _) => SizedBox(width: 9.w),
+            itemBuilder: (context, index) {
+              final category = categories[index];
+
+              final selected = cubit.selectedCategory == category['api'];
 
               return GestureDetector(
                 onTap: () {
-                  context.read<ExploreCubit>().selectCategory(category['api']!);
+                  cubit.selectCategory(category['api']!);
                 },
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 15.w),
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 250),
+                  curve: Curves.easeInOut,
+                  padding: EdgeInsets.symmetric(horizontal: 17.w),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     color: selected
                         ? scheme.primary
-                        : scheme.primary.withValues(alpha: 0.15),
-                    borderRadius: BorderRadius.circular(20.r),
+                        : scheme.surfaceContainerLow,
+                    borderRadius: BorderRadius.circular(30.r),
                     border: Border.all(
                       color: selected
-                          ? scheme.outlineVariant
-                          : Colors.transparent,
+                          ? scheme.primary
+                          : scheme.outlineVariant.withValues(alpha: 0.5),
                     ),
                   ),
                   child: Text(
                     category['name']!,
                     style: TextStyle(
-                      color: selected ? scheme.onPrimary : scheme.onSurface,
+                      color: selected
+                          ? scheme.onPrimary
+                          : scheme.onSurfaceVariant,
                       fontSize: 11.sp,
+                      fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
                     ),
                   ),
                 ),

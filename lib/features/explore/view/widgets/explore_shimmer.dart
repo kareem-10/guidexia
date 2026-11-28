@@ -7,96 +7,37 @@ class ExploreShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      padding: EdgeInsets.only(bottom: 20.h),
-      physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 12.w,
-        mainAxisSpacing: 14.h,
-        childAspectRatio: 0.72,
-      ),
-      itemCount: 6,
-      itemBuilder: (_, _) {
-        return const ShimmerPlaceCard();
-      },
-    );
-  }
-}
-
-class ShimmerPlaceCard extends StatelessWidget {
-  const ShimmerPlaceCard({super.key});
-
-  @override
-  Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
+
     final base = scheme.brightness == Brightness.dark
-        ? const Color(0xFF2C2C2C)
-        : const Color(0xFFE7EAEC);
+        ? const Color(0xFF292929)
+        : const Color(0xFFE5E8EB);
+
     final highlight = scheme.brightness == Brightness.dark
         ? const Color(0xFF3A3A3A)
-        : const Color(0xFFF7F8F9);
+        : const Color(0xFFF7F8FA);
+
     return Shimmer.fromColors(
       baseColor: base,
       highlightColor: highlight,
-      child: Container(
-        decoration: BoxDecoration(
-          color: scheme.surface,
-          borderRadius: BorderRadius.circular(17.r),
+      child: GridView.builder(
+        physics: const NeverScrollableScrollPhysics(),
+        padding: EdgeInsets.only(top: 3.h, bottom: 100.h),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 13.w,
+          mainAxisSpacing: 16.h,
+          childAspectRatio: 0.70,
         ),
-        clipBehavior: Clip.antiAlias,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(flex: 6, child: Container(color: scheme.surface)),
-
-            Expanded(
-              flex: 2,
-              child: Padding(
-                padding: EdgeInsets.all(10.w),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        height: 12.h,
-                        decoration: BoxDecoration(
-                          color: scheme.surface,
-                          borderRadius: BorderRadius.circular(5.r),
-                        ),
-                      ),
-                    ),
-
-                    SizedBox(width: 10.w),
-
-                    Container(
-                      width: 28.w,
-                      height: 10.h,
-                      decoration: BoxDecoration(
-                        color: scheme.surface,
-                        borderRadius: BorderRadius.circular(5.r),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+        itemCount: 6,
+        itemBuilder: (_, _) {
+          return Container(
+            decoration: BoxDecoration(
+              color: scheme.surface,
+              borderRadius: BorderRadius.circular(22.r),
             ),
-
-            Expanded(
-              flex: 1,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10.w),
-                child: Container(
-                  height: 8.h,
-                  width: 55.w,
-                  decoration: BoxDecoration(
-                    color: scheme.surface,
-                    borderRadius: BorderRadius.circular(5.r),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
