@@ -6,6 +6,9 @@ class ReviewModel {
   final String comment;
   final DateTime? reviewDate;
   final String reviewerName;
+  final String userId;
+  final String? reviewerImageUrl;
+  final bool isOwner;
 
   const ReviewModel({
     required this.id,
@@ -15,6 +18,9 @@ class ReviewModel {
     required this.comment,
     this.reviewDate,
     required this.reviewerName,
+    required this.userId,
+    this.reviewerImageUrl,
+    required this.isOwner,
   });
 
   factory ReviewModel.fromJson(Map<String, dynamic> json) {
@@ -38,6 +44,9 @@ class ReviewModel {
           ? null
           : DateTime.tryParse(json['reviewDate'].toString()),
       reviewerName: json['reviewerName']?.toString() ?? '',
+      userId: json['userId']?.toString() ?? '',
+      reviewerImageUrl: json['reviewerImageUrl']?.toString(),
+      isOwner: json['isOwner'] == true,
     );
   }
 }

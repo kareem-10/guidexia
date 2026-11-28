@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tourist_app/core/helpers/spacing.dart';
@@ -18,7 +19,6 @@ class ReviewsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<ReviewsCubit>();
-    final scheme = Theme.of(context).colorScheme;
     return BlocBuilder<ReviewsCubit, ReviewsState>(
       builder: (context, state) {
         return Column(
@@ -89,11 +89,19 @@ class ReviewsView extends StatelessWidget {
                         Row(
                           children: [
                             CircleAvatar(
-                              backgroundColor: scheme.primaryContainer,
-                              child: Icon(
-                                Icons.person_outline,
-                                color: scheme.onPrimaryContainer,
-                              ),
+                              radius: 20,
+                              backgroundImage:
+                                  review.reviewerImageUrl != null &&
+                                      review.reviewerImageUrl!.isNotEmpty
+                                  ? CachedNetworkImageProvider(
+                                      review.reviewerImageUrl!,
+                                    )
+                                  : null,
+                              child:
+                                  review.reviewerImageUrl == null ||
+                                      review.reviewerImageUrl!.isEmpty
+                                  ? const Icon(Icons.person)
+                                  : null,
                             ),
                             horizontalSpace(10),
                             Expanded(
@@ -127,23 +135,24 @@ class ReviewsView extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            IconButton(
-                              onPressed: state.isDeleting
-                                  ? null
-                                  : () => confirmDeleteReview(
-                                      context,
-                                      cubit,
-                                      referenceType: referenceType,
-                                      referenceId: referenceId,
-                                      reviewId: review.id,
-                                    ),
-                              icon: const Icon(
-                                Icons.delete_outline,
-                                color: Colors.red,
+                            if (review.isOwner)
+                              IconButton(
+                                onPressed: state.isDeleting
+                                    ? null
+                                    : () => confirmDeleteReview(
+                                        context,
+                                        cubit,
+                                        referenceType: referenceType,
+                                        referenceId: referenceId,
+                                        reviewId: review.id,
+                                      ),
+                                icon: const Icon(
+                                  Icons.delete_outline,
+                                  color: Colors.red,
+                                ),
+                                tooltip: 'Delete review',
+                                visualDensity: VisualDensity.compact,
                               ),
-                              tooltip: 'Delete review',
-                              visualDensity: VisualDensity.compact,
-                            ),
                           ],
                         ),
 
