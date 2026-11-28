@@ -11,6 +11,10 @@ class EndPoints {
 
   static const String reviews = 'Reviews';
   static String reviewById(int id) => 'Reviews/$id';
+
+  static const String favorites = 'Favorites';
+  static const String favoritesToggle = 'Favorites/toggle';
+  static const String favoritesCheck = 'Favorites/check';
 }
 
 class ApiKey {

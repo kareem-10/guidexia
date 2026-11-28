@@ -80,7 +80,10 @@ class StayCard extends StatelessWidget {
                         ),
                       ),
                     ),
-                    FavoriteIconButton(entityId: stay.id, entityType: 'Stay'),
+                    FavoriteIconButton(
+                      entityId: stay.id,
+                      entityType: 'accommodation',
+                    ),
                   ],
                 ),
               ),

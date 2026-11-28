@@ -103,7 +103,7 @@ Future<void> setupGetIt({CacheHelper? cacheHelper}) async {
   getIt.registerFactory<StayCubit>(() => StayCubit(getIt()));
 
   // Saved / Favorites
-  getIt.registerLazySingleton<SavedRepository>(() => SavedRepository());
+  getIt.registerLazySingleton<SavedRepository>(() => SavedRepository(getIt()));
 
   getIt.registerFactory<SavedCubit>(
     () => SavedCubit(
